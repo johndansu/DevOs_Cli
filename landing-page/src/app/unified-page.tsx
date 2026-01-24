@@ -85,103 +85,56 @@ const commandCategories = [
     description: "AI-powered development assistance with multiple providers",
     commands: [
       {
-        name: "devos ai-config",
-        description: "Manage AI provider configurations and API keys",
+        name: "python -m devos quick-ai",
+        description: "Fast AI-powered code generation and assistance",
         usage: [
-          "devos ai-config show",
-          "devos ai-config set-api-key groq",
-          "devos ai-config list-providers",
-          "devos ai-config test groq"
+          "python -m devos quick-ai \"create a Python class for user management\"",
+          "python -m devos quick-ai \"explain this function\" main.py",
+          "python -m devos quick-ai \"generate a REST API endpoint\""
         ],
-        arguments: [
-          { name: "action", description: "Action to perform: show, set-api-key, list-providers, test" },
-          { name: "provider", description: "AI provider: groq, openai, anthropic" }
+        options: [
+          { flag: "--provider", short: "-p", description: "AI provider to use (groq, openai)" },
+          { flag: "--model", short: "-m", description: "AI model to use" }
         ]
       },
       {
-        name: "devos ai",
-        description: "General AI assistance commands",
+        name: "python -m devos ai chat",
+        description: "Interactive AI conversation with project context",
         usage: [
-          "devos ai review main.py",
-          "devos ai explain function.py --line 25",
-          "devos ai refactor old_function.py",
-          "devos ai test mymodule.py",
-          "devos ai generate \"create a REST API endpoint\""
+          "python -m devos ai chat",
+          "python -m devos ai chat --context security",
+          "python -m devos ai chat --history"
         ],
         options: [
-          { flag: "--provider", short: "-p", description: "AI provider to use (openai, groq, anthropic)" },
-          { flag: "--model", short: "-m", description: "AI model to use" },
-          { flag: "--temperature", short: "-t", description: "AI response temperature (0.0-1.0)" },
-          { flag: "--max-tokens", description: "Maximum tokens in response" }
+          { flag: "--context", description: "Chat context: security, architecture, performance" },
+          { flag: "--history", description: "Load previous chat history" }
         ]
       },
       {
-        name: "devos ai analyze",
-        description: "Comprehensive code analysis with AI insights",
+        name: "python -m devos ai config",
+        description: "Configure AI providers and settings",
         usage: [
-          "devos ai analyze \"comprehensive project review\"",
-          "devos ai analyze main.py",
-          "devos ai analyze --scope current"
+          "python -m devos ai config --provider groq --api-key your-key",
+          "python -m devos ai config show",
+          "python -m devos ai config test groq"
         ],
         options: [
-          { flag: "--scope", description: "Analysis scope: current, project, all" },
-          { flag: "--export", description: "Export results to file" },
-          { flag: "--format", description: "Export format: json, markdown" }
+          { flag: "--provider", description: "AI provider: groq, openai" },
+          { flag: "--api-key", description: "Set API key for provider" },
+          { flag: "--show", description: "Show current configuration" }
         ]
       },
       {
-        name: "devos ai security-scan",
-        description: "AI-powered security vulnerability scanner",
+        name: "python -m devos groq",
+        description: "Groq-specific fast AI commands",
         usage: [
-          "devos ai security-scan",
-          "devos ai security-scan --severity high",
-          "devos ai security-scan --export security-report.json"
+          "python -m devos groq \"review this code\" main.py",
+          "python -m devos groq explain function.py",
+          "python -m devos groq chat"
         ],
         options: [
-          { flag: "--path", short: "-p", description: "Path to scan" },
-          { flag: "--severity", description: "Minimum severity: low, medium, high" },
-          { flag: "--export", description: "Export report to file" }
-        ]
-      },
-      {
-        name: "devos ai architecture-map",
-        description: "AI-powered architecture analysis and mapping",
-        usage: [
-          "devos ai architecture-map",
-          "devos ai architecture-map --patterns mvc",
-          "devos ai architecture-map --export architecture.json"
-        ],
-        options: [
-          { flag: "--patterns", description: "Focus on specific architecture patterns" },
-          { flag: "--export", description: "Export results to file" },
-          { flag: "--depth", description: "Analysis depth: shallow, medium, deep" }
-        ]
-      },
-      {
-        name: "devos ai enhance",
-        description: "AI-powered code enhancement and improvement suggestions",
-        usage: [
-          "devos ai enhance",
-          "devos ai enhance main.py",
-          "devos ai enhance --focus performance"
-        ],
-        options: [
-          { flag: "--focus", description: "Focus areas: performance, security, readability" },
-          { flag: "--auto-apply", description: "Automatically apply safe suggestions" }
-        ]
-      },
-      {
-        name: "devos ai project-summary",
-        description: "Generate comprehensive AI-powered project summary",
-        usage: [
-          "devos ai project-summary",
-          "devos ai project-summary --export summary.md",
-          "devos ai project-summary --recommendations"
-        ],
-        options: [
-          { flag: "--detailed", description: "Include detailed analysis" },
-          { flag: "--export", description: "Export summary to file" },
-          { flag: "--recommendations", description: "Include AI recommendations" }
+          { flag: "--model", short: "-m", description: "Groq model to use" },
+          { flag: "--temperature", short: "-t", description: "Response temperature" }
         ]
       }
     ]
@@ -193,38 +146,38 @@ const commandCategories = [
     description: "Shortcuts for the most common operations",
     commands: [
       {
-        name: "devos now",
+        name: "python -m devos now",
         description: "Quick start tracking current project",
         usage: [
-          "devos now"
+          "python -m devos now"
         ]
       },
       {
-        name: "devos done",
+        name: "python -m devos done",
         description: "Quick stop current tracking session",
         usage: [
-          "devos done"
+          "python -m devos done"
         ]
       },
       {
-        name: "devos status",
+        name: "python -m devos status",
         description: "Quick status overview",
         usage: [
-          "devos status"
+          "python -m devos status"
         ]
       },
       {
-        name: "devos today",
+        name: "python -m devos today",
         description: "Show today's tracking summary",
         usage: [
-          "devos today"
+          "python -m devos today"
         ]
       },
       {
-        name: "devos setup",
+        name: "python -m devos setup",
         description: "Quick setup wizard for new users",
         usage: [
-          "devos setup"
+          "python -m devos setup"
         ]
       }
     ]
@@ -236,12 +189,12 @@ const commandCategories = [
     description: "Initialize and manage projects with full lifecycle support",
     commands: [
       {
-        name: "devos init",
+        name: "python -m devos init",
         description: "Initialize a new project with templates",
         usage: [
-          "devos init",
-          "devos init python-api",
-          "devos init --name my-project --language python --path ./my-project"
+          "python -m devos init",
+          "python -m devos init python-api",
+          "python -m devos init --name my-project --language python --path ./my-project"
         ],
         options: [
           { flag: "--name", short: "-n", description: "Project name" },
@@ -262,12 +215,12 @@ const commandCategories = [
         ]
       },
       {
-        name: "devos project add",
+        name: "python -m devos project add",
         description: "Add an existing project to DevOS management",
         usage: [
-          "devos project add my-project",
-          "devos project add --path ./my-project --language python",
-          "devos project add --type web --description \"My web app\""
+          "python -m devos project add my-project",
+          "python -m devos project add --path ./my-project --language python",
+          "python -m devos project add --type web --description \"My web app\""
         ],
         options: [
           { flag: "--path", short: "-p", description: "Project path" },
@@ -278,13 +231,13 @@ const commandCategories = [
         ]
       },
       {
-        name: "devos project list",
+        name: "python -m devos project list",
         description: "List all managed projects",
         usage: [
-          "devos project list",
-          "devos project list --type web",
-          "devos project list --status active",
-          "devos project list --format json"
+          "python -m devos project list",
+          "python -m devos project list --type web",
+          "python -m devos project list --status active",
+          "python -m devos project list --format json"
         ],
         options: [
           { flag: "--type", short: "-t", description: "Filter by project type" },
@@ -293,24 +246,24 @@ const commandCategories = [
         ]
       },
       {
-        name: "devos project status",
+        name: "python -m devos project status",
         description: "Show detailed project status and overview",
         usage: [
-          "devos project status my-project",
-          "devos project status --current"
+          "python -m devos project status my-project",
+          "python -m devos project status --current"
         ],
         options: [
           { flag: "--current", short: "-c", description: "Show current directory project" }
         ]
       },
       {
-        name: "devos project tasks",
+        name: "python -m devos project tasks",
         description: "Manage project tasks",
         usage: [
-          "devos project tasks list",
-          "devos project tasks add \"Implement authentication\"",
-          "devos project tasks complete \"Implement authentication\"",
-          "devos project tasks --project my-project"
+          "python -m devos project tasks list",
+          "python -m devos project tasks add \"Implement authentication\"",
+          "python -m devos project tasks complete \"Implement authentication\"",
+          "python -m devos project tasks --project my-project"
         ],
         arguments: [
           { name: "action", description: "Action: list, add, complete" },
@@ -321,13 +274,13 @@ const commandCategories = [
         ]
       },
       {
-        name: "devos project issues",
+        name: "python -m devos project issues",
         description: "Manage project issues and bugs",
         usage: [
-          "devos project issues list",
-          "devos project issues add \"Fix login bug\"",
-          "devos project issues resolve \"Fix login bug\"",
-          "devos project issues --project my-project"
+          "python -m devos project issues list",
+          "python -m devos project issues add \"Fix login bug\"",
+          "python -m devos project issues resolve \"Fix login bug\"",
+          "python -m devos project issues --project my-project"
         ],
         arguments: [
           { name: "action", description: "Action: list, add, resolve" },
@@ -338,13 +291,13 @@ const commandCategories = [
         ]
       },
       {
-        name: "devos project notes",
+        name: "python -m devos project notes",
         description: "Manage project notes and documentation",
         usage: [
-          "devos project notes list",
-          "devos project notes add \"Remember to update dependencies\"",
-          "devos project notes delete \"Remember to update dependencies\"",
-          "devos project notes --project my-project"
+          "python -m devos project notes list",
+          "python -m devos project notes add \"Remember to update dependencies\"",
+          "python -m devos project notes delete \"Remember to update dependencies\"",
+          "python -m devos project notes --project my-project"
         ],
         arguments: [
           { name: "action", description: "Action: list, add, delete" },
@@ -363,12 +316,12 @@ const commandCategories = [
     description: "Track and manage development sessions",
     commands: [
       {
-        name: "devos track start",
+        name: "python -m devos track start",
         description: "Start a new work session",
         usage: [
-          "devos track start",
-          "devos track start --notes \"Working on authentication\"",
-          "devos track start --project my-project"
+          "python -m devos track start",
+          "python -m devos track start --notes \"Working on authentication\"",
+          "python -m devos track start --project my-project"
         ],
         options: [
           { flag: "--project", short: "-p", description: "Project name or path" },
@@ -377,23 +330,23 @@ const commandCategories = [
         ]
       },
       {
-        name: "devos track stop",
+        name: "python -m devos track stop",
         description: "Stop the current work session",
         usage: [
-          "devos track stop",
-          "devos track stop --notes \"Completed auth module\""
+          "python -m devos track stop",
+          "python -m devos track stop --notes \"Completed auth module\""
         ],
         options: [
           { flag: "--notes", short: "-n", description: "Session notes" }
         ]
       },
       {
-        name: "devos track status",
+        name: "python -m devos track status",
         description: "Show current tracking status and recent sessions",
         usage: [
-          "devos track status",
-          "devos track status --project my-project",
-          "devos track status --limit 10"
+          "python -m devos track status",
+          "python -m devos track status --project my-project",
+          "python -m devos track status --limit 10"
         ],
         options: [
           { flag: "--project", short: "-p", description: "Filter by project name or path" },
@@ -401,13 +354,13 @@ const commandCategories = [
         ]
       },
       {
-        name: "devos track list",
+        name: "python -m devos track list",
         description: "List tracking sessions",
         usage: [
-          "devos track list",
-          "devos track list --project my-project",
-          "devos track list --format json",
-          "devos track list --limit 50"
+          "python -m devos track list",
+          "python -m devos track list --project my-project",
+          "python -m devos track list --format json",
+          "python -m devos track list --limit 50"
         ],
         options: [
           { flag: "--project", short: "-p", description: "Filter by project name or path" },
@@ -424,12 +377,12 @@ const commandCategories = [
     description: "Manage encrypted environment variables",
     commands: [
       {
-        name: "devos env set",
+        name: "python -m devos env set",
         description: "Set an environment variable (encrypted)",
         usage: [
-          "devos env set DATABASE_URL",
-          "devos env set API_KEY --project my-project",
-          "devos env set NODE_ENV --global"
+          "python -m devos env set DATABASE_URL",
+          "python -m devos env set API_KEY --project my-project",
+          "python -m devos env set NODE_ENV --global"
         ],
         options: [
           { flag: "--project", short: "-p", description: "Project name or path" },
@@ -438,12 +391,12 @@ const commandCategories = [
         ]
       },
       {
-        name: "devos env get",
+        name: "python -m devos env get",
         description: "Get an environment variable",
         usage: [
-          "devos env get DATABASE_URL",
-          "devos env get DATABASE_URL --show",
-          "devos env get NODE_ENV --global"
+          "python -m devos env get DATABASE_URL",
+          "python -m devos env get DATABASE_URL --show",
+          "python -m devos env get NODE_ENV --global"
         ],
         options: [
           { flag: "--project", short: "-p", description: "Project name or path" },
@@ -452,13 +405,13 @@ const commandCategories = [
         ]
       },
       {
-        name: "devos env list",
+        name: "python -m devos env list",
         description: "List environment variables",
         usage: [
-          "devos env list",
-          "devos env list --global",
-          "devos env list --show-values",
-          "devos env list --project my-project"
+          "python -m devos env list",
+          "python -m devos env list --global",
+          "python -m devos env list --show-values",
+          "python -m devos env list --project my-project"
         ],
         options: [
           { flag: "--project", short: "-p", description: "Project name or path" },
@@ -467,11 +420,11 @@ const commandCategories = [
         ]
       },
       {
-        name: "devos env delete",
+        name: "python -m devos env delete",
         description: "Delete an environment variable",
         usage: [
-          "devos env delete DATABASE_URL",
-          "devos env delete NODE_ENV --global"
+          "python -m devos env delete DATABASE_URL",
+          "python -m devos env delete NODE_ENV --global"
         ],
         options: [
           { flag: "--project", short: "-p", description: "Project name or path" },
@@ -487,22 +440,22 @@ const commandCategories = [
     description: "Manage DevOS settings and preferences",
     commands: [
       {
-        name: "devos config show",
+        name: "python -m devos config show",
         description: "Show current configuration",
         usage: [
-          "devos config show",
-          "devos config show --global"
+          "python -m devos config show",
+          "python -m devos config show --global"
         ],
         options: [
           { flag: "--global", short: undefined, description: "Show global configuration" }
         ]
       },
       {
-        name: "devos config set",
+        name: "python -m devos config set",
         description: "Set a configuration value",
         usage: [
-          "devos config set default_language python",
-          "devos config set tracking.auto_git true --global"
+          "python -m devos config set default_language python",
+          "python -m devos config set tracking.auto_git true --global"
         ],
         arguments: [
           { name: "key", description: "Configuration key (supports dot notation)" },
@@ -513,10 +466,10 @@ const commandCategories = [
         ]
       },
       {
-        name: "devos config init",
+        name: "python -m devos config init",
         description: "Initialize configuration file",
         usage: [
-          "devos config init"
+          "python -m devos config init"
         ]
       }
     ]
@@ -528,12 +481,12 @@ const commandCategories = [
     description: "Guided workflows and interactive setup",
     commands: [
       {
-        name: "devos interactive",
+        name: "python -m devos interactive",
         description: "Start interactive mode with guided workflows",
         usage: [
-          "devos interactive",
-          "devos i",
-          "devos wizard"
+          "python -m devos interactive",
+          "python -m devos i",
+          "python -m devos wizard"
         ]
       }
     ]
@@ -545,11 +498,11 @@ const commandCategories = [
     description: "Command-line auto-completion setup",
     commands: [
       {
-        name: "devos completion",
+        name: "python -m devos completion",
         description: "Generate or install shell completion",
         usage: [
-          "devos completion bash",
-          "devos completion bash --install"
+          "python -m devos completion bash",
+          "python -m devos completion bash --install"
         ],
         arguments: [
           { name: "shell", description: "Shell type: bash, zsh, fish, powershell" }
@@ -559,10 +512,10 @@ const commandCategories = [
         ]
       },
       {
-        name: "devos setup-completion",
+        name: "python -m devos setup-completion",
         description: "Setup shell completion interactively",
         usage: [
-          "devos setup-completion"
+          "python -m devos setup-completion"
         ]
       }
     ]
@@ -723,11 +676,11 @@ export default function UnifiedDevOSPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="bg-gray-900 rounded-lg p-4 mb-4 font-mono text-sm">
-                  <div className="text-green-400"># Install in project</div>
-                  <div className="text-white">pip install devos-cli</div>
-                  <div className="text-gray-400 mt-2"># Run with python -m</div>
-                  <div className="text-white">python -m devos init</div>
+                <div className="bg-gray-900 rounded-lg p-6 mb-4 font-mono text-sm overflow-x-auto">
+                  <div className="text-green-400 whitespace-nowrap"># Install in project</div>
+                  <div className="text-white whitespace-nowrap">pip install devos-cli</div>
+                  <div className="text-gray-400 mt-3 whitespace-nowrap"># Run with python -m</div>
+                  <div className="text-white whitespace-nowrap">python -m devos init</div>
                 </div>
                 <p className="text-gray-600 text-sm">
                   Works in any Python environment without touching your system PATH.
@@ -746,11 +699,11 @@ export default function UnifiedDevOSPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="bg-gray-900 rounded-lg p-4 mb-4 font-mono text-sm">
-                  <div className="text-green-400"># Download and run</div>
-                  <div className="text-white">curl -L devos.dev/install | bash</div>
-                  <div className="text-gray-400 mt-2"># Or download directly</div>
-                  <div className="text-white">./devos init</div>
+                <div className="bg-gray-900 rounded-lg p-6 mb-4 font-mono text-sm overflow-x-auto">
+                  <div className="text-green-400 whitespace-nowrap"># Download and run</div>
+                  <div className="text-white whitespace-nowrap">curl -L https://github.com/johndansu/DevOs_Cli/releases/latest/download/devos.exe -o devos.exe</div>
+                  <div className="text-gray-400 mt-3 whitespace-nowrap"># Or download directly</div>
+                  <div className="text-white whitespace-nowrap">./devos.exe init</div>
                 </div>
                 <p className="text-gray-600 text-sm">
                   Self-contained binary that runs from any directory.
@@ -769,11 +722,11 @@ export default function UnifiedDevOSPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="bg-gray-900 rounded-lg p-4 mb-4 font-mono text-sm">
-                  <div className="text-green-400"># Clone and run</div>
-                  <div className="text-white">git clone github.com/yourname/devos</div>
-                  <div className="text-gray-400 mt-2"># Run directly</div>
-                  <div className="text-white">cd devos && python devos.py init</div>
+                <div className="bg-gray-900 rounded-lg p-6 mb-4 font-mono text-sm overflow-x-auto">
+                  <div className="text-green-400 whitespace-nowrap"># Clone and run</div>
+                  <div className="text-white whitespace-nowrap">git clone https://github.com/johndansu/DevOs_Cli.git</div>
+                  <div className="text-gray-400 mt-3 whitespace-nowrap"># Run directly</div>
+                  <div className="text-white whitespace-nowrap">cd DevOs_Cli && python -m devos init</div>
                 </div>
                 <p className="text-gray-600 text-sm">
                   Perfect for contributors and custom modifications.
@@ -783,11 +736,9 @@ export default function UnifiedDevOSPage() {
           </div>
 
           <div className="mt-12 text-center">
-            <div className="inline-flex items-center px-4 py-2 bg-yellow-50 border border-yellow-200 rounded-lg">
-              <Shield className="h-5 w-5 text-yellow-600 mr-2" />
-              <span className="text-yellow-800 font-medium">
-                No system-wide installation required. Runs exactly where you need it.
-              </span>
+            <div className="inline-flex items-center px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg">
+              <Shield className="h-5 w-5 text-gray-600 mr-2" />
+              <span className="text-gray-800 font-medium">No system-wide installation required. Runs exactly where you need it.</span>
             </div>
           </div>
         </div>
@@ -848,7 +799,7 @@ export default function UnifiedDevOSPage() {
               
               <div className="space-y-2">
                 <div>
-                  <span className="text-gray-500">$</span> <span className="text-green-400">devos init python-api</span>
+                  <span className="text-gray-500">$</span> <span className="text-green-400">python -m devos init python-api</span>
                 </div>
                 <div className="text-blue-400">✓ Creating project structure...</div>
                 <div className="text-blue-400">✓ Installing dependencies...</div>
@@ -1021,12 +972,7 @@ export default function UnifiedDevOSPage() {
                       <CardContent className="space-y-6">
                         {/* Usage Examples */}
                         <div>
-                          <h1 className="text-4xl sm:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                            DevOS CLI
-                            <span className="block text-2xl sm:text-3xl text-blue-600 mt-2">
-                              AI-Powered Development Assistant
-                            </span>
-                          </h1>
+                          <h3 className="text-lg font-semibold text-gray-900 mb-4">Usage Examples</h3>
                           <div className="space-y-2">
                             {command.usage.map((usage, usageIndex) => (
                               <div key={usageIndex} className="flex items-center justify-between bg-gray-900 rounded-lg p-4">
@@ -1316,11 +1262,11 @@ export default function UnifiedDevOSPage() {
                 </div>
                 <div className="space-y-2 font-mono text-sm">
                   <div className="text-green-400"># Install DevOS CLI</div>
-                  <div className="text-white">curl -sSL https://devos.dev/install | bash</div>
+                  <div className="text-white">pip install devos-cli</div>
                   <div className="text-gray-400 mt-4"># Initialize a new project</div>
-                  <div className="text-white">devos init python-api</div>
+                  <div className="text-white">python -m devos init python-api</div>
                   <div className="text-gray-400 mt-4"># Start tracking</div>
-                  <div className="text-white">devos track start</div>
+                  <div className="text-white">python -m devos now</div>
                 </div>
               </div>
               

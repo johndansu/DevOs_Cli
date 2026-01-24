@@ -59,7 +59,7 @@ export default function DocumentationPage() {
       commands: [
         { code: 'python -m devos now', description: 'Start tracking' },
         { code: 'python -m devos done', description: 'Stop tracking' },
-        { code: 'python -m devos session list', description: 'View session history' }
+        { code: 'python -m devos today', description: 'View today\'s activity' }
       ]
     },
     'environment-management': {
@@ -75,7 +75,7 @@ export default function DocumentationPage() {
       commands: [
         { code: 'python -m devos env set DATABASE_URL postgresql://...', description: 'Set environment variable' },
         { code: 'python -m devos env list', description: 'List environments' },
-        { code: 'python -m devos env use production', description: 'Switch environment' }
+        { code: 'python -m devos env export', description: 'Export environment config' }
       ]
     },
     'ai-integration': {
@@ -83,15 +83,15 @@ export default function DocumentationPage() {
       icon: <Cpu className="h-6 w-6 text-gray-900 mb-4" />,
       description: 'Harness the power of AI for code analysis, security scanning, and intelligent development assistance.',
       features: [
+        'Quick AI: Fast AI-powered code generation and assistance',
+        'AI Chat: Interactive AI conversations with project context',
         'Code Analysis: Deep analysis of code quality and patterns',
-        'Security Scanning: AI-powered vulnerability detection',
-        'Code Enhancement: Intelligent suggestions for improvements',
-        'Documentation Generation: Auto-generate documentation from code'
+        'Multiple Providers: Support for OpenAI, Groq, and other AI providers'
       ],
       commands: [
-        { code: 'python -m devos ai-analyze --scope current', description: 'Analyze code with AI' },
-        { code: 'python -m devos ai-security-scan', description: 'Security scan' },
-        { code: 'python -m devos ai-enhance --file app.py', description: 'Enhance code' }
+        { code: 'python -m devos quick-ai "create a Python class"', description: 'Quick AI assistance' },
+        { code: 'python -m devos ai chat', description: 'Interactive AI chat' },
+        { code: 'python -m devos ai config --provider groq', description: 'Configure AI provider' }
       ]
     },
     'workflow-automation': {
@@ -99,31 +99,31 @@ export default function DocumentationPage() {
       icon: <Activity className="h-6 w-6 text-gray-900 mb-4" />,
       description: 'Automate repetitive tasks and create intelligent workflows that adapt to your development process.',
       features: [
-        'Custom Workflows: Build workflows for any development task',
-        'Triggers: Event-driven automation based on Git, file changes, and more',
-        'Integration: Connect with external services and APIs',
-        'Scheduling: Run tasks on specific schedules'
+        'Quick Commands: Fast access to common development tasks',
+        'Interactive Mode: Guided workflows for complex operations',
+        'Template System: Reusable project and code templates',
+        'Automation Triggers: Event-driven task execution'
       ],
       commands: [
-        { code: 'python -m devos workflow create deploy', description: 'Create workflow' },
-        { code: 'python -m devos workflow run deploy', description: 'Run workflow' },
-        { code: 'python -m devos workflow list', description: 'List workflows' }
+        { code: 'python -m devos quick', description: 'Quick task access' },
+        { code: 'python -m devos interactive', description: 'Interactive mode' },
+        { code: 'python -m devos setup', description: 'Setup wizard' }
       ]
     },
     'team-collaboration': {
-      title: 'Team Collaboration',
+      title: 'Privacy-First Design',
       icon: <Users className="h-6 w-6 text-gray-900 mb-4" />,
-      description: 'Collaborate effectively with your team through shared dashboards, workflows, and project management.',
+      description: 'Local data storage, encrypted environment variables, and optional AI integration with full privacy control.',
       features: [
-        'Team Dashboards: Shared visibility into project progress',
-        'Collaborative Workflows: Team-wide automation processes',
-        'Role Management: Granular permissions and access control',
-        'Activity Feeds: Real-time updates on team activities'
+        'Local Storage: All data stored locally on your machine',
+        'Encryption: Military-grade encryption for sensitive data',
+        'No Telemetry: No data sent to external servers without consent',
+        'Optional Cloud: Choose when to use cloud-based features'
       ],
       commands: [
-        { code: 'python -m devos team create my-team', description: 'Create team' },
-        { code: 'python -m devos team invite user@example.com', description: 'Invite member' },
-        { code: 'python -m devos team share project-name', description: 'Share project' }
+        { code: 'python -m devos config show --global', description: 'View privacy settings' },
+        { code: 'python -m devos env list', description: 'Manage encrypted variables' },
+        { code: 'python -m devos status', description: 'Check system status' }
       ]
     }
   };
@@ -315,8 +315,8 @@ export default function DocumentationPage() {
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Method 3: Development Mode</h3>
                 <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
                   <div className="text-green-400 mb-2"># Clone and install</div>
-                  <div className="text-white">git clone https://github.com/devos/cli.git</div>
-                  <div className="text-white">cd cli</div>
+                  <div className="text-white">git clone https://github.com/johndansu/DevOs_Cli.git</div>
+                  <div className="text-white">cd DevOs_Cli</div>
                   <div className="text-white">pip install -e .</div>
                   <div className="text-gray-400 mt-2"># Run in development mode</div>
                   <div className="text-white">python -m devos --help</div>
@@ -367,12 +367,12 @@ export default function DocumentationPage() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">3. Use AI-Powered Features</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">3. Use AI Features</h3>
                 <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
-                  <div className="text-green-400 mb-2"># Analyze your code with AI</div>
-                  <div className="text-white">python -m devos ai-analyze --scope current</div>
-                  <div className="text-blue-400 mt-2">🧠 AI analysis in progress...</div>
-                  <div className="text-blue-400">📊 Report generated: analysis.json</div>
+                  <div className="text-green-400 mb-2"># Quick AI assistance</div>
+                  <div className="text-white">python -m devos quick-ai "create a Python class for user management"</div>
+                  <div className="text-blue-400 mt-2">🧠 AI response generated</div>
+                  <div className="text-gray-400"># Fast AI-powered code generation</div>
                 </div>
               </div>
 
@@ -412,7 +412,7 @@ export default function DocumentationPage() {
                 <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
                   <div className="text-green-400 mb-2"># Set global preferences</div>
                   <div className="text-white">python -m devos config set --global editor vscode</div>
-                  <div className="text-white">python -m devos config set --global ai_provider openai</div>
+                  <div className="text-white">python -m devos ai config --provider groq --api-key your-key</div>
                   <div className="text-gray-400 mt-2"># View configuration</div>
                   <div className="text-white">python -m devos config show --global</div>
                 </div>
@@ -512,8 +512,8 @@ export default function DocumentationPage() {
 
             <div className="bg-gray-50 p-6 rounded-lg">
               <Users className="h-8 w-8 text-gray-900 mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Team Collaboration</h3>
-              <p className="text-gray-600 mb-4">Team dashboards, collaborative workflows, and shared project management.</p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Privacy-First Design</h3>
+              <p className="text-gray-600 mb-4">Local data storage, encrypted environment variables, and optional AI integration.</p>
               <button 
                 onClick={() => openModal('team-collaboration')}
                 className="text-gray-900 hover:text-gray-700 font-medium flex items-center"
@@ -709,12 +709,16 @@ export default function DocumentationPage() {
             <h3 className="text-xl font-semibold text-gray-900 mb-4">Quick Start Commands</h3>
             <div className="space-y-4">
               <div className="border-l-4 border-gray-300 pl-4">
-                <div className="font-mono text-sm text-gray-900">devos now</div>
+                <div className="font-mono text-sm text-gray-900">python -m devos now</div>
                 <div className="text-gray-600 text-sm mt-1">Quick start tracking current project</div>
               </div>
               <div className="border-l-4 border-gray-300 pl-4">
-                <div className="font-mono text-sm text-gray-900">devos done</div>
+                <div className="font-mono text-sm text-gray-900">python -m devos done</div>
                 <div className="text-gray-600 text-sm mt-1">Quick stop current tracking session</div>
+              </div>
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos today</div>
+                <div className="text-gray-600 text-sm mt-1">View today's activity summary</div>
               </div>
             </div>
           </div>
@@ -723,15 +727,15 @@ export default function DocumentationPage() {
             <h3 className="text-xl font-semibold text-gray-900 mb-4">Project Management</h3>
             <div className="space-y-4">
               <div className="border-l-4 border-gray-300 pl-4">
-                <div className="font-mono text-sm text-gray-900">devos init [template] [name]</div>
+                <div className="font-mono text-sm text-gray-900">python -m devos init [template] [name]</div>
                 <div className="text-gray-600 text-sm mt-1">Initialize a new project with template</div>
               </div>
               <div className="border-l-4 border-gray-300 pl-4">
-                <div className="font-mono text-sm text-gray-900">devos project add</div>
+                <div className="font-mono text-sm text-gray-900">python -m devos project add</div>
                 <div className="text-gray-600 text-sm mt-1">Add current directory as a project</div>
               </div>
               <div className="border-l-4 border-gray-300 pl-4">
-                <div className="font-mono text-sm text-gray-900">devos project list</div>
+                <div className="font-mono text-sm text-gray-900">python -m devos project list</div>
                 <div className="text-gray-600 text-sm mt-1">List all managed projects</div>
               </div>
             </div>
@@ -741,16 +745,38 @@ export default function DocumentationPage() {
             <h3 className="text-xl font-semibold text-gray-900 mb-4">AI Commands</h3>
             <div className="space-y-4">
               <div className="border-l-4 border-gray-300 pl-4">
-                <div className="font-mono text-sm text-gray-900">devos ai-analyze [options]</div>
-                <div className="text-gray-600 text-sm mt-1">Analyze code with AI</div>
+                <div className="font-mono text-sm text-gray-900">python -m devos quick-ai [prompt]</div>
+                <div className="text-gray-600 text-sm mt-1">Fast AI-powered assistance</div>
               </div>
               <div className="border-l-4 border-gray-300 pl-4">
-                <div className="font-mono text-sm text-gray-900">devos ai-security-scan</div>
-                <div className="text-gray-600 text-sm mt-1">Perform AI-powered security scan</div>
+                <div className="font-mono text-sm text-gray-900">python -m devos ai chat</div>
+                <div className="text-gray-600 text-sm mt-1">Interactive AI conversation</div>
               </div>
               <div className="border-l-4 border-gray-300 pl-4">
-                <div className="font-mono text-sm text-gray-900">devos ai-enhance [options]</div>
-                <div className="text-gray-600 text-sm mt-1">Enhance code with AI suggestions</div>
+                <div className="font-mono text-sm text-gray-900">python -m devos ai config [options]</div>
+                <div className="text-gray-600 text-sm mt-1">Configure AI providers and settings</div>
+              </div>
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos groq [command]</div>
+                <div className="text-gray-600 text-sm mt-1">Groq-specific AI commands</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">Environment & Configuration</h3>
+            <div className="space-y-4">
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos env set [key] [value]</div>
+                <div className="text-gray-600 text-sm mt-1">Set environment variables</div>
+              </div>
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos env list</div>
+                <div className="text-gray-600 text-sm mt-1">List all environment variables</div>
+              </div>
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos config show</div>
+                <div className="text-gray-600 text-sm mt-1">Show current configuration</div>
               </div>
             </div>
           </div>
@@ -770,54 +796,55 @@ export default function DocumentationPage() {
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Custom Templates</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Quick Commands</h3>
               <p className="text-gray-600 mb-4">
-                Create custom project templates with your preferred structure, dependencies, and configurations.
+                Access common development tasks quickly with the quick command system.
               </p>
               <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
-                <div className="text-green-400 mb-2"># Create custom template</div>
-                <div className="text-white">python -m devos template create my-template</div>
-                <div className="text-gray-400 mt-2"># Use template</div>
-                <div className="text-white">python -m devos init my-template project-name</div>
+                <div className="text-green-400 mb-2"># Quick task access</div>
+                <div className="text-white">python -m devos quick</div>
+                <div className="text-gray-400 mt-2"># Interactive mode</div>
+                <div className="text-white">python -m devos interactive</div>
               </div>
             </div>
 
             <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Workflow Automation</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">AI Integration</h3>
               <p className="text-gray-600 mb-4">
-                Automate repetitive tasks with custom workflows and intelligent triggers.
+                Configure and use AI providers for intelligent development assistance.
               </p>
               <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
-                <div className="text-green-400 mb-2"># Create workflow</div>
-                <div className="text-white">python -m devos workflow create deploy</div>
-                <div className="text-gray-400 mt-2"># Execute workflow</div>
-                <div className="text-white">python -m devos workflow run deploy</div>
+                <div className="text-green-400 mb-2"># Configure AI provider</div>
+                <div className="text-white">python -m devos ai config --provider groq</div>
+                <div className="text-gray-400 mt-2"># Quick AI assistance</div>
+                <div className="text-white">python -m devos quick-ai "create a Python class"</div>
               </div>
             </div>
 
             <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Team Integration</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Privacy & Security</h3>
               <p className="text-gray-600 mb-4">
-                Integrate with team tools, share configurations, and collaborate effectively.
+                All data stored locally with encryption. No telemetry without consent.
               </p>
               <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
-                <div className="text-green-400 mb-2"># Sync team settings</div>
-                <div className="text-white">python -m devos team sync</div>
-                <div className="text-gray-400 mt-2"># Share project</div>
-                <div className="text-white">python -m devos team share project-name</div>
+                <div className="text-green-400 mb-2"># View privacy settings</div>
+                <div className="text-white">python -m devos config show --global</div>
+                <div className="text-gray-400 mt-2"># Manage encrypted variables</div>
+                <div className="text-white">python -m devos env list</div>
               </div>
             </div>
 
             <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">API Integration</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Development Mode</h3>
               <p className="text-gray-600 mb-4">
-                Integrate DevOS with external APIs, webhooks, and third-party services.
+                Run DevOS in development mode for testing and contribution.
               </p>
               <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
-                <div className="text-green-400 mb-2"># Configure API</div>
-                <div className="text-white">python -m devos api configure github</div>
-                <div className="text-gray-400 mt-2"># Test integration</div>
-                <div className="text-white">python -m devos api test github</div>
+                <div className="text-green-400 mb-2"># Clone and install</div>
+                <div className="text-white">git clone https://github.com/johndansu/DevOs_Cli.git</div>
+                <div className="text-white">cd DevOs_Cli && pip install -e .</div>
+                <div className="text-gray-400 mt-2"># Run in development</div>
+                <div className="text-white">python -m devos --help</div>
               </div>
             </div>
           </div>
