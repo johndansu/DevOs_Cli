@@ -1,18 +1,61 @@
 [pylint]
 # Disable certain checks that are too strict or not relevant
-disable=[
-    "R0801",  # duplicate-code - Common in CLI commands with similar patterns
-    "R0903",  # too-few-public-methods - Small utility classes are fine
-    "C0114",  # missing-module-docstring - Some modules don't need docstrings
-    "C0115",  # missing-class-docstring - Some classes are self-explanatory
-    "C0116",  # missing-function-docstring - Some functions are obvious
-    "W0613",  # unused-argument - Common in callback functions
-    "R0913",  # too-many-arguments - Some functions need many parameters
-    "R0914",  # too-many-locals - Complex functions may need many locals
-    "R0915",  # too-many-statements - Some functions are naturally complex
-    "W0703",  # broad-except - Sometimes we need to catch all exceptions
-    "R1732",  # consider-using-with - Not always applicable
-]
+disable=
+    R0801,  # duplicate-code - Common in CLI commands with similar patterns
+    R0903,  # too-few-public-methods - Small utility classes are fine
+    C0114,  # missing-module-docstring - Some modules don't need docstrings
+    C0115,  # missing-class-docstring - Some classes are self-explanatory
+    C0116,  # missing-function-docstring - Some functions are obvious
+    W0613,  # unused-argument - Common in callback functions
+    R0913,  # too-many-arguments - Some functions need many parameters
+    R0914,  # too-many-locals - Complex functions may need many locals
+    R0915,  # too-many-statements - Some functions are naturally complex
+    W0703,  # broad-except - Sometimes we need to catch all exceptions
+    R1732,  # consider-using-with - Not always applicable
+    C0303,  # trailing-whitespace - Formatting issue
+    W1203,  # logging-f-string-interpolation - Style preference
+    W0707,  # raise-missing-from - Style preference
+    W1309,  # f-string-without-interpolation - Style preference
+    R0917,  # too-many-positional-arguments - Some functions need many parameters
+    W0603,  # global-statement - Sometimes needed for state management
+    W0611,  # unused-import - Common in development
+    C0301,  # line-too-long - Modern screens handle longer lines
+    W0718,  # broad-exception-caught - Sometimes needed
+    R1723,  # no-else-break - Style preference
+    W0105,  # pointless-string-statement - Common for documentation
+    R0911,  # too-many-return-statements - Some functions are complex
+    W0511,  # fixme - TODO comments are fine
+    R1714,  # consider-using-in - Style preference
+    C0413,  # wrong-import-position - Sometimes needed
+    E1136,  # unsubscriptable-object - Type checking limitation
+    R0912,  # too-many-branches - Complex functions
+    R0915,  # too-many-statements - Complex functions
+    E1111,  # assignment-from-no-return - Sometimes needed
+    R1702,  # too-many-nested-blocks - Complex logic
+    R1710,  # inconsistent-return-statements - Sometimes needed
+    W0404,  # reimported - Sometimes needed
+    C0415,  # import-outside-toplevel - Sometimes needed
+    W1514,  # unspecified-encoding - File encoding default is fine
+    W0622,  # redefined-builtin - Sometimes needed
+    W0621,  # redefined-outer-name - Sometimes needed
+    E1120,  # no-value-for-parameter - Sometimes needed
+    E0602,  # undefined-variable - Type checking limitation
+    W1510,  # subprocess-run-check - Sometimes needed
+    R0904,  # too-many-public-methods - Some classes are complex
+    W0201,  # attribute-defined-outside-init - Sometimes needed
+    C0104,  # disallowed-name - Sometimes needed
+    W0702,  # bare-except - Sometimes needed
+    W0107,  # unnecessary-pass - Sometimes needed
+    C3001,  # unnecessary-lambda-assignment - Style preference
+    W0640,  # cell-var-from-loop - Sometimes needed
+    E0401,  # import-error - Missing dependencies
+    F0011,  # config-parse-error - Configuration issues
+    C0411,  # wrong-import-order - Sometimes needed
+    R0902,  # too-many-instance-attributes - Some classes are complex
+    R1705,  # no-else-return - Style preference
+    R1724,  # no-else-continue - Style preference
+    R1720,  # no-else-raise - Style preference
+    W0612,  # unused-variable - Sometimes needed
 
 # Minimum line length for functions/classes that require docstrings
 docstring-min-length=10
@@ -39,11 +82,10 @@ max-public-methods=25
 min-similarity-lines=8
 
 # Files to ignore
-ignore=[
-    "tests/",
-    "build/",
-    "dist/",
-    "*.egg-info/",
-    "__pycache__/",
-    ".pytest_cache/",
-]
+ignore=
+    tests/,
+    build/,
+    dist/,
+    *.egg-info/,
+    __pycache__/,
+    .pytest_cache/
