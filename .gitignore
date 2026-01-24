@@ -56,6 +56,10 @@ out/
 .env.test.local
 .env.production.local
 
+# PyPI configuration
+.pypirc
+.pypirc.example
+
 # Logs
 logs
 *.log
