@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
@@ -565,30 +566,24 @@ export default function UnifiedDevOSPage() {
             </div>
             
             <div className="hidden md:flex items-center space-x-8">
-              <button 
-                onClick={() => scrollToSection("hero")}
-                className={`text-gray-600 hover:text-gray-900 transition-colors ${activeSection === "hero" ? "text-gray-900" : ""}`}
-              >
-                Home
-              </button>
-              <button 
-                onClick={() => scrollToSection("features")}
-                className={`text-gray-600 hover:text-gray-900 transition-colors ${activeSection === "features" ? "text-gray-900" : ""}`}
+              <Link 
+                href="/#features"
+                className="text-gray-600 hover:text-gray-900 transition-colors"
               >
                 Features
-              </button>
-              <button 
-                onClick={() => scrollToSection("commands")}
-                className={`text-gray-600 hover:text-gray-900 transition-colors ${activeSection === "commands" ? "text-gray-900" : ""}`}
+              </Link>
+              <Link 
+                href="/#commands"
+                className="text-gray-600 hover:text-gray-900 transition-colors"
               >
                 Commands
-              </button>
-              <a 
+              </Link>
+              <Link 
                 href="/docs"
                 className="text-gray-600 hover:text-gray-900 transition-colors"
               >
                 Docs
-              </a>
+              </Link>
             </div>
             
             <div className="flex items-center space-x-4">
@@ -623,12 +618,9 @@ export default function UnifiedDevOSPage() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              <Button size="lg" className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3 text-lg" asChild>
-                <a href="https://pypi.org/project/devos-cli/" target="_blank" rel="noopener noreferrer">
-                  <Package className="mr-2 h-5 w-5" />
-                  Install on PyPI
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </a>
+              <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:border-gray-400 hover:text-gray-900 px-8 py-3 text-lg font-mono text-sm">
+                <span className="text-gray-500 mr-2">$</span>
+                pip install devos-cli
               </Button>
               <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:border-gray-400 hover:text-gray-900 px-8 py-3 text-lg" asChild>
                 <a href="https://github.com/johndansu/DevOs_Cli" target="_blank" rel="noopener noreferrer">
@@ -969,7 +961,7 @@ export default function UnifiedDevOSPage() {
                     </CardHeader>
                     
                     {expandedCommand === command.name && (
-                      <CardContent className="space-y-6">
+                      <CardContent className="space-y-6 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400">
                         {/* Usage Examples */}
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900 mb-4">Usage Examples</h3>
@@ -1012,7 +1004,7 @@ export default function UnifiedDevOSPage() {
                                       <code className="text-blue-600">{option.flag}</code>
                                     </div>
                                     <div>
-                                      <code className="text-purple-600">{option.short ?? '-'}</code>
+                                      <code className="text-purple-600">{('short' in option ? option.short : '-')}</code>
                                     </div>
                                     <div className="text-gray-600">{option.description}</div>
                                   </div>
@@ -1305,13 +1297,16 @@ export default function UnifiedDevOSPage() {
             Join thousands of developers using our open source CLI to build better software
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3 text-lg">
-              <Download className="mr-2 h-5 w-5" />
-              Download Now
+            <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:border-gray-400 hover:text-gray-900 px-8 py-3 text-lg font-mono text-sm">
+              <span className="text-gray-500 mr-2">$</span>
+              pip install devos-cli
             </Button>
-            <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:border-gray-400 hover:text-gray-900 px-8 py-3 text-lg">
-              <Github className="mr-2 h-5 w-5" />
-              View on GitHub
+            <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:border-gray-400 hover:text-gray-900 px-8 py-3 text-lg" asChild>
+              <a href="https://github.com/johndansu/DevOs_Cli" target="_blank" rel="noopener noreferrer">
+                <Github className="mr-2 h-5 w-5" />
+                View on GitHub
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </a>
             </Button>
           </div>
         </div>
@@ -1337,38 +1332,26 @@ export default function UnifiedDevOSPage() {
             </div>
             
             <div>
-              <h3 className="font-semibold mb-4">Quick Links</h3>
-              <div className="hidden md:flex items-center space-x-8">
-                <a href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
-                <a href="#commands" className="text-gray-600 hover:text-gray-900 transition-colors">Commands</a>
-                <a href="/docs" className="text-gray-600 hover:text-gray-900 transition-colors">Documentation</a>
-                <a href="#installation" className="text-gray-600 hover:text-gray-900 transition-colors">Installation</a>
-                <a href="https://github.com/johndansu/DevOs_Cli" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
-                  <Github className="h-5 w-5" />
-                </a>
-              </div>
+              <h3 className="font-semibold mb-4">Product</h3>
               <div className="space-y-2 text-gray-400">
-                <a href="#" className="block hover:text-white transition-colors">Documentation</a>
-                <a href="#" className="block hover:text-white transition-colors">Command Reference</a>
-                <a href="#" className="block hover:text-white transition-colors">GitHub Wiki</a>
+                <a href="/docs" className="block hover:text-white transition-colors">Documentation</a>
+                <a href="/docs#installation" className="block hover:text-white transition-colors">Installation</a>
               </div>
             </div>
             
             <div>
               <h3 className="font-semibold mb-4">Resources</h3>
               <div className="space-y-2 text-gray-400">
-                <a href="#" className="block hover:text-white transition-colors">Documentation</a>
-                <a href="#" className="block hover:text-white transition-colors">Command Reference</a>
-                <a href="#" className="block hover:text-white transition-colors">GitHub Wiki</a>
+                <a href="https://github.com/johndansu/DevOs_Cli" target="_blank" rel="noopener noreferrer" className="block hover:text-white transition-colors">GitHub Repository</a>
+                <a href="https://pypi.org/project/devos-cli/" target="_blank" rel="noopener noreferrer" className="block hover:text-white transition-colors">PyPI Package</a>
               </div>
             </div>
             
             <div>
-              <h3 className="font-semibold mb-4">Community</h3>
+              <h3 className="font-semibold mb-4">Connect</h3>
               <div className="space-y-2 text-gray-400">
-                <a href="#" className="block hover:text-white transition-colors">Contributing</a>
-                <a href="#" className="block hover:text-white transition-colors">Issues</a>
-                <a href="#" className="block hover:text-white transition-colors">Discussions</a>
+                <a href="https://github.com/johndansu/DevOs_Cli/issues" target="_blank" rel="noopener noreferrer" className="block hover:text-white transition-colors">Report Issues</a>
+                <a href="https://github.com/johndansu/DevOs_Cli" target="_blank" rel="noopener noreferrer" className="block hover:text-white transition-colors">View Source</a>
               </div>
             </div>
           </div>

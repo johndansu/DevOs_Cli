@@ -1,0 +1,1013 @@
+"use client";
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { 
+  Terminal, 
+  Github, 
+  Download, 
+  Zap, 
+  Shield, 
+  Users, 
+  Cpu, 
+  Database, 
+  GitBranch,
+  ChevronRight,
+  ArrowRight,
+  Book,
+  Code,
+  Settings,
+  Rocket,
+  Activity,
+  FileText,
+  CheckCircle,
+  AlertCircle,
+  Info,
+  X
+} from 'lucide-react';
+
+export default function DocumentationPage() {
+  const [activeModal, setActiveModal] = useState<string | null>(null);
+
+  const featureDetails = {
+    'project-management': {
+      title: 'Project Management',
+      icon: <Terminal className="h-6 w-6 text-gray-900" />,
+      description: 'DevOS CLI provides comprehensive project management capabilities that streamline your development workflow from initialization to deployment.',
+      features: [
+        'Intelligent Templates: Pre-built project templates for various frameworks and languages',
+        'Project Tracking: Monitor project progress and milestones',
+        'Dependency Management: Automatic handling of project dependencies',
+        'Version Control Integration: Seamless Git workflow integration'
+      ],
+      commands: [
+        { code: 'python -m devos init python-api my-project', description: 'Initialize new project' },
+        { code: 'python -m devos project add', description: 'Add existing project' },
+        { code: 'python -m devos project list', description: 'List all projects' }
+      ]
+    },
+    'session-tracking': {
+      title: 'Session Tracking',
+      icon: <Zap className="h-6 w-6 text-gray-900" />,
+      description: 'Automatic time tracking and session management help you understand your development patterns and optimize productivity.',
+      features: [
+        'Automatic Detection: Starts tracking when you begin coding',
+        'Session Insights: Detailed analytics and productivity metrics',
+        'Break Reminders: Intelligent break suggestions',
+        'Time Reporting: Comprehensive time tracking reports'
+      ],
+      commands: [
+        { code: 'python -m devos now', description: 'Start tracking current session' },
+        { code: 'python -m devos done', description: 'End current session' },
+        { code: 'python -m devos today', description: 'View today\'s activity' }
+      ]
+    },
+    'environment-management': {
+      title: 'Environment Management',
+      icon: <Shield className="h-6 w-6 text-gray-900" />,
+      description: 'Secure environment variable management with encryption and multi-environment support.',
+      features: [
+        'Encryption: All environment variables are encrypted at rest',
+        'Multi-Environment: Support for development, staging, and production',
+        'Secure Storage: Local encrypted storage with optional cloud sync',
+        'Easy Management: Simple commands for environment operations'
+      ],
+      commands: [
+        { code: 'python -m devos env set DATABASE_URL postgresql://...', description: 'Set environment variable' },
+        { code: 'python -m devos env list', description: 'List all variables' },
+        { code: 'python -m devos env delete NODE_ENV', description: 'Delete variable' }
+      ]
+    },
+    'ai-integration': {
+      title: 'AI Integration',
+      icon: <Cpu className="h-6 w-6 text-gray-900" />,
+      description: 'Harness the power of AI for code analysis, security scanning, and intelligent development assistance.',
+      features: [
+        'Quick AI: Fast AI-powered code generation and assistance',
+        'Security Scanning: AI-powered vulnerability detection',
+        'Code Analysis: Comprehensive code review and suggestions',
+        'Multiple Providers: Support for OpenAI, Groq, and Anthropic'
+      ],
+      commands: [
+        { code: 'python -m devos quick-ai "create a REST API"', description: 'Quick AI assistance' },
+        { code: 'python -m devos ai security-scan', description: 'Security analysis' },
+        { code: 'python -m devos ai config --provider groq', description: 'Configure AI provider' }
+      ]
+    },
+    'workflow-automation': {
+      title: 'Workflow Automation',
+      icon: <Activity className="h-6 w-6 text-gray-900" />,
+      description: 'Automate repetitive tasks and create intelligent workflows that adapt to your development process.',
+      features: [
+        'Quick Commands: Fast access to common development tasks',
+        'Interactive Mode: Guided workflows for complex operations',
+        'Template System: Reusable project and code templates',
+        'Custom Workflows: Build automation for any development task'
+      ],
+      commands: [
+        { code: 'python -m devos quick', description: 'Quick command access' },
+        { code: 'python -m devos interactive', description: 'Interactive mode' },
+        { code: 'python -m devos workflow create deploy', description: 'Create workflow' }
+      ]
+    },
+    'team-collaboration': {
+      title: 'Privacy-First Design',
+      icon: <Users className="h-6 w-6 text-gray-900" />,
+      description: 'Local data storage, encrypted environment variables, and optional AI integration with full privacy control.',
+      features: [
+        'Local Storage: All data stored locally on your machine',
+        'Encryption: End-to-end encryption for sensitive data',
+        'No Telemetry: No data sent to external servers without consent',
+        'Privacy Controls: Granular control over data sharing'
+      ],
+      commands: [
+        { code: 'python -m devos config show --global', description: 'View privacy settings' },
+        { code: 'python -m devos env list', description: 'Manage encrypted variables' },
+        { code: 'python -m devos status', description: 'Check data status' }
+      ]
+    }
+  };
+
+  const openModal = (feature: string) => {
+    setActiveModal(feature);
+  };
+
+  const closeModal = () => {
+    setActiveModal(null);
+  };
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
+                  <Terminal className="h-5 w-5 text-white" />
+      
+                <span className="text-xl font-semibold text-gray-900">DevOS</span>
+              </div>
+            </div>
+            
+            <div className="hidden md:flex items-center space-x-8">
+              <Link 
+                href="/"
+                className="text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                Home
+              </Link>
+              <Link 
+                href="/#features"
+                className="text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                Features
+              </Link>
+              <Link 
+                href="/#commands"
+                className="text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                Commands
+              </Link>
+              <Link 
+                href="/docs"
+                className="text-gray-900 transition-colors"
+              >
+                Docs
+              </Link>
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              <Button variant="ghost" className="text-gray-700 hover:text-gray-900" asChild>
+                <a href="https://github.com/johndansu/DevOs_Cli" target="_blank" rel="noopener noreferrer">
+                  <Github className="mr-2 h-4 w-4" />
+                  GitHub
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-gray-50 to-gray-100 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+              DevOS CLI Documentation
+            </h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Complete guide to the open source CLI that manages your entire development workflow
+            </p>
+  
+
+        </div>
+      </section>
+
+      {/* Table of Contents */}
+      <section className="py-12 bg-white border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Table of Contents</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="space-y-3">
+              <h3 className="font-semibold text-gray-900">Getting Started</h3>
+              <ul className="space-y-2">
+                <li><a href="#introduction" className="text-gray-600 hover:text-gray-900 flex items-center"><ChevronRight className="h-3 w-3 mr-2" />Introduction</a></li>
+                <li><a href="#installation" className="text-gray-600 hover:text-gray-900 flex items-center"><ChevronRight className="h-3 w-3 mr-2" />Installation</a></li>
+                <li><a href="#quick-start" className="text-gray-600 hover:text-gray-900 flex items-center"><ChevronRight className="h-3 w-3 mr-2" />Quick Start</a></li>
+                <li><a href="#configuration" className="text-gray-600 hover:text-gray-900 flex items-center"><ChevronRight className="h-3 w-3 mr-2" />Configuration</a></li>
+              </ul>
+  
+            <div className="space-y-3">
+              <h3 className="font-semibold text-gray-900">Core Features</h3>
+              <ul className="space-y-2">
+                <li><a href="#project-management" className="text-gray-600 hover:text-gray-900 flex items-center"><ChevronRight className="h-3 w-3 mr-2" />Project Management</a></li>
+                <li><a href="#session-tracking" className="text-gray-600 hover:text-gray-900 flex items-center"><ChevronRight className="h-3 w-3 mr-2" />Session Tracking</a></li>
+                <li><a href="#environment-management" className="text-gray-600 hover:text-gray-900 flex items-center"><ChevronRight className="h-3 w-3 mr-2" />Environment Management</a></li>
+                <li><a href="#ai-integration" className="text-gray-600 hover:text-gray-900 flex items-center"><ChevronRight className="h-3 w-3 mr-2" />AI Integration</a></li>
+              </ul>
+  
+            <div className="space-y-3">
+              <h3 className="font-semibold text-gray-900">Advanced Features</h3>
+              <ul className="space-y-2">
+                <li><a href="#workflow-automation" className="text-gray-600 hover:text-gray-900 flex items-center"><ChevronRight className="h-3 w-3 mr-2" />Workflow Automation</a></li>
+                <li><a href="#team-collaboration" className="text-gray-600 hover:text-gray-900 flex items-center"><ChevronRight className="h-3 w-3 mr-2" />Team Collaboration</a></li>
+                <li><a href="#business-features" className="text-gray-600 hover:text-gray-900 flex items-center"><ChevronRight className="h-3 w-3 mr-2" />Business Features</a></li>
+                <li><a href="#command-reference" className="text-gray-600 hover:text-gray-900 flex items-center"><ChevronRight className="h-3 w-3 mr-2" />Command Reference</a></li>
+              </ul>
+  
+
+
+        </div>
+      </section>
+
+      {/* Introduction */}
+      <section id="introduction" className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Introduction</h2>
+            <div className="prose prose-lg text-gray-600">
+              <p>
+                DevOS CLI is a comprehensive open source command-line interface that streamlines your entire development workflow. 
+                From project initialization to AI-powered code analysis, DevOS provides a unified toolkit for modern developers.
+              </p>
+              <p>
+                Built with Python and designed for extensibility, DevOS CLI integrates seamlessly with your existing development 
+                tools while providing powerful automation capabilities, intelligent project management, and advanced AI features.
+              </p>
+  
+            
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <div className="flex items-center mb-4">
+                  <Terminal className="h-6 w-6 text-gray-900 mr-3" />
+                  <h3 className="font-semibold text-gray-900">50+ Commands</h3>
+                <p className="text-gray-600">Comprehensive command coverage for all development needs</p>
+              </div>
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <div className="flex items-center mb-4">
+                  <Cpu className="h-6 w-6 text-gray-900 mr-3" />
+                  <h3 className="font-semibold text-gray-900">AI-Powered</h3>
+                </div>
+                <p className="text-gray-600">Intelligent code analysis and automation capabilities</p>
+              </div>
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <div className="flex items-center mb-4">
+                  <Github className="h-6 w-6 text-gray-900 mr-3" />
+                  <h3 className="font-semibold text-gray-900">Open Source</h3>
+                </div>
+                <p className="text-gray-600">Community-driven and fully customizable</p>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Installation */}
+      <section id="installation" className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Installation</h2>
+            
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-8">
+              <div className="flex items-start">
+                <Info className="h-5 w-5 text-gray-600 mt-0.5 mr-3 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-1">No PATH Modifications Required</h3>
+                  <p className="text-gray-800">DevOS CLI works without requiring PATH environment variable changes.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Method 1: Python Package</h3>
+                <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                  <div className="text-green-400 mb-2"># Install via pip</div>
+                  <div className="text-white">pip install devos-cli</div>
+                  <div className="text-gray-400 mt-2"># Run immediately</div>
+                  <div className="text-white">python -m devos --help</div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Method 2: Standalone Binary</h3>
+                <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                  <div className="text-green-400 mb-2"># Download and run</div>
+                  <div className="text-white">curl -L https://github.com/devos/cli/releases/latest/download/devos.exe -o devos.exe</div>
+                  <div className="text-white">./devos.exe --help</div>
+      
+    
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Method 3: Development Mode</h3>
+                <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                  <div className="text-green-400 mb-2"># Clone and install</div>
+                  <div className="text-white">git clone https://github.com/johndansu/DevOs_Cli.git</div>
+                  <div className="text-white">cd DevOs_Cli</div>
+                  <div className="text-white">pip install -e .</div>
+                  <div className="text-gray-400 mt-2"># Run in development mode</div>
+                  <div className="text-white">python -m devos --help</div>
+      
+    
+  
+
+            <div className="mt-8 bg-gray-50 border border-gray-200 rounded-lg p-4">
+              <div className="flex items-start">
+                <CheckCircle className="h-5 w-5 text-gray-600 mt-0.5 mr-3 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-1">Verification</h3>
+                  <p className="text-gray-800">After installation, verify with: <code className="bg-gray-100 px-2 py-1 rounded">python -m devos --version</code></p>
+      
+    
+  
+
+
+        </div>
+      </section>
+
+      {/* Quick Start */}
+      <section id="quick-start" className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Quick Start</h2>
+            
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">1. Initialize Your First Project</h3>
+                <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                  <div className="text-green-400 mb-2"># Create a new project</div>
+                  <div className="text-white">python -m devos init my-project</div>
+                  <div className="text-blue-400 mt-2">✓ Project structure created</div>
+                  <div className="text-blue-400">✓ Environment configured</div>
+                  <div className="text-blue-400">✓ Git repository initialized</div>
+      
+    
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">2. Start Development Session</h3>
+                <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                  <div className="text-green-400 mb-2"># Navigate and start tracking</div>
+                  <div className="text-white">cd my-project</div>
+                  <div className="text-white">python -m devos now</div>
+                  <div className="text-blue-400 mt-2">🎯 Development session started</div>
+                  <div className="text-gray-400"># Time tracking is now active</div>
+      
+    
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">3. Use AI Features</h3>
+                <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                  <div className="text-green-400 mb-2"># Quick AI assistance</div>
+                  <div className="text-white">python -m devos quick-ai "create a Python class for user management"</div>
+                  <div className="text-blue-400 mt-2">🧠 AI response generated</div>
+                  <div className="text-gray-400"># Fast AI-powered code generation</div>
+      
+    
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">4. End Session</h3>
+                <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                  <div className="text-green-400 mb-2"># Stop tracking and save session</div>
+                  <div className="text-white">python -m devos done</div>
+                  <div className="text-blue-400 mt-2">✅ Session saved: 2h 34m</div>
+                  <div className="text-gray-400"># Session data stored for reporting</div>
+      
+    
+  
+
+            <div className="mt-8 bg-gray-50 border border-gray-200 rounded-lg p-4">
+              <div className="flex items-start">
+                <AlertCircle className="h-5 w-5 text-gray-600 mt-0.5 mr-3 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-1">Pro Tip</h3>
+                  <p className="text-gray-800">Use <code className="bg-gray-100 px-2 py-1 rounded">python -m devos interactive</code> for a guided workflow experience.</p>
+      
+    
+  
+
+
+        </div>
+      </section>
+
+      {/* Configuration */}
+      <section id="configuration" className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Configuration</h2>
+            
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Global Configuration</h3>
+                <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                  <div className="text-green-400 mb-2"># Set global preferences</div>
+                  <div className="text-white">python -m devos config set --global editor vscode</div>
+                  <div className="text-white">python -m devos ai config --provider groq --api-key your-key</div>
+                  <div className="text-gray-400 mt-2"># View configuration</div>
+                  <div className="text-white">python -m devos config show --global</div>
+      
+    
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Project Configuration</h3>
+                <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                  <div className="text-green-400 mb-2"># Set project-specific settings</div>
+                  <div className="text-white">python -m devos config set --project template python-api</div>
+                  <div className="text-white">python -m devos config set --project auto_track true</div>
+                  <div className="text-gray-400 mt-2"># View project config</div>
+                  <div className="text-white">python -m devos config show</div>
+      
+    
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Environment Variables</h3>
+                <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                  <div className="text-green-400 mb-2"># Set environment variables</div>
+                  <div className="text-white">python -m devos env set DATABASE_URL postgresql://...</div>
+                  <div className="text-white">python -m devos env set API_KEY sk-...</div>
+                  <div className="text-gray-400 mt-2"># List all environments</div>
+                  <div className="text-white">python -m devos env list</div>
+      
+    
+  
+
+
+        </div>
+      </section>
+
+      {/* Core Features Overview */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Core Features</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-gray-50 p-6 rounded-lg">
+              <Terminal className="h-8 w-8 text-gray-900 mb-4" />
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Project Management</h3>
+              <p className="text-gray-600 mb-4">Initialize projects with intelligent templates, track progress, and manage project lifecycle.</p>
+              <button 
+                onClick={() => openModal('project-management')}
+                className="text-gray-900 hover:text-gray-700 font-medium flex items-center"
+              >
+                Learn more <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            </div>
+          </div>
+  
+  
+
+            <div className="bg-gray-50 p-6 rounded-lg">
+              <Zap className="h-8 w-8 text-gray-900 mb-4" />
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Session Tracking</h3>
+              <p className="text-gray-600 mb-4">Automatic time tracking, session management, and detailed productivity analytics.</p>
+              <button 
+                onClick={() => openModal('session-tracking')}
+                className="text-gray-900 hover:text-gray-700 font-medium flex items-center"
+              >
+                Learn more <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            </div>
+          </div>
+  
+  
+
+            <div className="bg-gray-50 p-6 rounded-lg">
+              <Shield className="h-8 w-8 text-gray-900 mb-4" />
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Environment Management</h3>
+              <p className="text-gray-600 mb-4">Secure environment variable storage, multi-environment support, and encrypted secrets.</p>
+              <button 
+                onClick={() => openModal('environment-management')}
+                className="text-gray-900 hover:text-gray-700 font-medium flex items-center"
+              >
+                Learn more <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            </div>
+          </div>
+  
+  
+
+            <div className="bg-gray-50 p-6 rounded-lg">
+              <Cpu className="h-8 w-8 text-gray-900 mb-4" />
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">AI Integration</h3>
+              <p className="text-gray-600 mb-4">AI-powered code analysis, security scanning, and intelligent development assistance.</p>
+              <button 
+                onClick={() => openModal('ai-integration')}
+                className="text-gray-900 hover:text-gray-700 font-medium flex items-center"
+              >
+                Learn more <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            </div>
+          </div>
+  
+  
+
+            <div className="bg-gray-50 p-6 rounded-lg">
+              <Activity className="h-8 w-8 text-gray-900 mb-4" />
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Workflow Automation</h3>
+              <p className="text-gray-600 mb-4">Custom automation workflows, triggers, and intelligent process management.</p>
+              <button 
+                onClick={() => openModal('workflow-automation')}
+                className="text-gray-900 hover:text-gray-700 font-medium flex items-center"
+              >
+                Learn more <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            </div>
+          </div>
+  
+  
+
+            <div className="bg-gray-50 p-6 rounded-lg">
+              <Users className="h-8 w-8 text-gray-900 mb-4" />
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Privacy-First Design</h3>
+              <p className="text-gray-600 mb-4">Local data storage, encrypted environment variables, and optional AI integration.</p>
+              <button 
+                onClick={() => openModal('team-collaboration')}
+                className="text-gray-900 hover:text-gray-700 font-medium flex items-center"
+              >
+                Learn more <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            </div>
+          </div>
+  
+  
+
+
+        </div>
+      </section>
+
+      {/* Detailed Feature Sections */}
+      <section id="project-management" className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Project Management</h2>
+            <div className="prose prose-lg text-gray-600">
+              <p>
+                DevOS CLI provides essential project management capabilities with simple, intuitive commands.
+              </p>
+              <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-4">Key Features</h3>
+              <ul>
+                <li><strong>Project Initialization:</strong> Quick setup with templates</li>
+                <li><strong>Project Tracking:</strong> Monitor and manage multiple projects</li>
+                <li><strong>Simple Commands:</strong> Easy-to-remember command structure</li>
+              </ul>
+              <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-4">Common Commands</h3>
+              <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                <div className="text-green-400 mb-2"># Initialize new project</div>
+                <div className="text-white">python -m devos init python-api my-project</div>
+                <div className="text-gray-400 mt-4"># Add current directory as project</div>
+                <div className="text-white">python -m devos project add</div>
+                <div className="text-gray-400 mt-4"># List all projects</div>
+                <div className="text-white">python -m devos project list</div>
+    
+  
+
+
+        </div>
+      </section>
+
+      <section id="session-tracking" className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Session Tracking</h2>
+            <div className="prose prose-lg text-gray-600">
+              <p>
+                Simple time tracking to monitor your development sessions and productivity.
+              </p>
+              <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-4">Features</h3>
+              <ul>
+                <li><strong>Quick Start:</strong> Begin tracking with a simple command</li>
+                <li><strong>Session Management:</strong> Start and stop tracking sessions</li>
+                <li><strong>Daily Summary:</strong> View today's activity at a glance</li>
+              </ul>
+              <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-4">Usage</h3>
+              <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                <div className="text-green-400 mb-2"># Start tracking</div>
+                <div className="text-white">python -m devos now</div>
+                <div className="text-gray-400 mt-4"># Stop tracking</div>
+                <div className="text-white">python -m devos done</div>
+                <div className="text-gray-400 mt-4"># View today's activity</div>
+                <div className="text-white">python -m devos today</div>
+    
+  
+
+
+        </div>
+      </section>
+
+      <section id="environment-management" className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Environment Management</h2>
+            <div className="prose prose-lg text-gray-600">
+              <p>
+                Manage environment variables securely with simple commands for local development.
+              </p>
+              <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-4">Features</h3>
+              <ul>
+                <li><strong>Local Storage:</strong> Environment variables stored locally</li>
+                <li><strong>Easy Management:</strong> Simple set, get, and list operations</li>
+                <li><strong>Project Scope:</strong> Environment variables per project</li>
+              </ul>
+              <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-4">Commands</h3>
+              <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                <div className="text-green-400 mb-2"># Set environment variable</div>
+                <div className="text-white">python -m devos env set DATABASE_URL postgresql://...</div>
+                <div className="text-gray-400 mt-4"># List environment variables</div>
+                <div className="text-white">python -m devos env list</div>
+                <div className="text-gray-400 mt-4"># Delete environment variable</div>
+                <div className="text-white">python -m devos env delete DATABASE_URL</div>
+    
+  
+
+
+        </div>
+      </section>
+
+      <section id="ai-integration" className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">AI Integration</h2>
+            <div className="prose prose-lg text-gray-600">
+              <p>
+                AI-powered development assistance with support for multiple AI providers.
+              </p>
+              <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-4">AI Capabilities</h3>
+              <ul>
+                <li><strong>Quick AI:</strong> Fast AI-powered code generation and assistance</li>
+                <li><strong>AI Chat:</strong> Interactive AI conversation with project context</li>
+                <li><strong>Multiple Providers:</strong> Support for Groq, OpenAI, and Anthropic</li>
+              </ul>
+              <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-4">AI Commands</h3>
+              <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                <div className="text-green-400 mb-2"># Quick AI assistance</div>
+                <div className="text-white">python -m devos quick-ai "create a Python class"</div>
+                <div className="text-gray-400 mt-4"># Interactive AI chat</div>
+                <div className="text-white">python -m devos ai chat</div>
+                <div className="text-gray-400 mt-4"># Configure AI provider</div>
+                <div className="text-white">python -m devos ai config --provider groq</div>
+    
+  
+
+
+        </div>
+      </section>
+
+      <section id="workflow-automation" className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Workflow Automation</h2>
+            <div className="prose prose-lg text-gray-600">
+              <p>
+                Automate repetitive tasks and create intelligent workflows that adapt to your development process.
+              </p>
+              <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-4">Automation Features</h3>
+              <ul>
+                <li><strong>Quick Commands:</strong> Fast access to common development tasks</li>
+                <li><strong>Interactive Mode:</strong> Guided workflows for complex operations</li>
+                <li><strong>Template System:</strong> Reusable project and code templates</li>
+              </ul>
+              <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-4">Workflow Commands</h3>
+              <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                <div className="text-green-400 mb-2"># Quick command access</div>
+                <div className="text-white">python -m devos quick</div>
+                <div className="text-gray-400 mt-4"># Interactive mode</div>
+                <div className="text-white">python -m devos interactive</div>
+                <div className="text-gray-400 mt-4"># Alternative interactive mode</div>
+                <div className="text-white">python -m devos wizard</div>
+    
+  
+
+
+        </div>
+      </section>
+
+      <section id="team-collaboration" className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Privacy-First Design</h2>
+            <div className="prose prose-lg text-gray-600">
+              <p>
+                Local data storage, encrypted environment variables, and optional AI integration with full privacy control.
+              </p>
+              <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-4">Privacy Features</h3>
+              <ul>
+                <li><strong>Local Storage:</strong> All data stored locally on your machine</li>
+                <li><strong>Encryption:</strong> End-to-end encryption for sensitive data</li>
+                <li><strong>No Telemetry:</strong> No data sent to external servers without consent</li>
+                <li><strong>Privacy Controls:</strong> Granular control over data sharing</li>
+              </ul>
+              <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-4">Privacy Commands</h3>
+              <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                <div className="text-green-400 mb-2"># View privacy settings</div>
+                <div className="text-white">python -m devos config show --global</div>
+                <div className="text-gray-400 mt-4"># Manage encrypted variables</div>
+                <div className="text-white">python -m devos env list</div>
+                <div className="text-gray-400 mt-4"># Check data status</div>
+                <div className="text-white">python -m devos status</div>
+    
+  
+
+
+        </div>
+      </section>
+
+      {/* Command Reference */}
+      <section id="command-reference" className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Command Reference</h2>
+          
+          <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">Quick Start Commands</h3>
+            <div className="space-y-4">
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos now</div>
+                <div className="text-gray-600 text-sm mt-1">Quick start tracking current project</div>
+    
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos done</div>
+                <div className="text-gray-600 text-sm mt-1">Quick stop current tracking session</div>
+    
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos today</div>
+                <div className="text-gray-600 text-sm mt-1">View today's activity summary</div>
+    
+  
+
+
+          <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">Project Management</h3>
+            <div className="space-y-4">
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos init [template] [name]</div>
+                <div className="text-gray-600 text-sm mt-1">Initialize a new project with template</div>
+    
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos project add</div>
+                <div className="text-gray-600 text-sm mt-1">Add current directory as a project</div>
+    
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos project list</div>
+                <div className="text-gray-600 text-sm mt-1">List all managed projects</div>
+    
+  
+
+
+          <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">AI Commands</h3>
+            <div className="space-y-4">
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos quick-ai [prompt]</div>
+                <div className="text-gray-600 text-sm mt-1">Fast AI-powered assistance</div>
+    
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos ai chat</div>
+                <div className="text-gray-600 text-sm mt-1">Interactive AI conversation</div>
+    
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos ai config [options]</div>
+                <div className="text-gray-600 text-sm mt-1">Configure AI providers and settings</div>
+    
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos groq [command]</div>
+                <div className="text-gray-600 text-sm mt-1">Groq-specific AI commands</div>
+    
+  
+
+
+          <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">Environment & Configuration</h3>
+            <div className="space-y-4">
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos env set [key] [value]</div>
+                <div className="text-gray-600 text-sm mt-1">Set environment variables</div>
+    
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos env list</div>
+                <div className="text-gray-600 text-sm mt-1">List all environment variables</div>
+    
+              <div className="border-l-4 border-gray-300 pl-4">
+                <div className="font-mono text-sm text-gray-900">python -m devos config show</div>
+                <div className="text-gray-600 text-sm mt-1">Show current configuration</div>
+    
+  
+
+
+          <div className="text-center">
+            <a href="/#commands" className="inline-flex items-center text-gray-900 hover:text-gray-700 font-medium">
+              View complete command reference <ArrowRight className="h-4 w-4 ml-1" />
+            </a>
+
+
+        </div>
+      </section>
+
+      {/* Advanced Topics */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Advanced Topics</h2>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Quick Commands</h3>
+              <p className="text-gray-600 mb-4">
+                Access common development tasks quickly with the quick command system.
+              </p>
+              <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                <div className="text-green-400 mb-2"># Quick task access</div>
+                <div className="text-white">python -m devos quick</div>
+                <div className="text-gray-400 mt-2"># Interactive mode</div>
+                <div className="text-white">python -m devos interactive</div>
+    
+  
+
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">AI Integration</h3>
+              <p className="text-gray-600 mb-4">
+                Configure and use AI providers for intelligent development assistance.
+              </p>
+              <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                <div className="text-green-400 mb-2"># Configure AI provider</div>
+                <div className="text-white">python -m devos ai config --provider groq</div>
+                <div className="text-gray-400 mt-2"># Quick AI assistance</div>
+                <div className="text-white">python -m devos quick-ai "create a Python class"</div>
+    
+  
+
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Privacy & Security</h3>
+              <p className="text-gray-600 mb-4">
+                All data stored locally with encryption. No telemetry without consent.
+              </p>
+              <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                <div className="text-green-400 mb-2"># View privacy settings</div>
+                <div className="text-white">python -m devos config show --global</div>
+                <div className="text-gray-400 mt-2"># Manage encrypted variables</div>
+                <div className="text-white">python -m devos env list</div>
+    
+  
+
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Development Mode</h3>
+              <p className="text-gray-600 mb-4">
+                Run DevOS in development mode for testing and contribution.
+              </p>
+              <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                <div className="text-green-400 mb-2"># Clone and install</div>
+                <div className="text-white">git clone https://github.com/johndansu/DevOs_Cli.git</div>
+                <div className="text-white">cd DevOs_Cli && pip install -e .</div>
+                <div className="text-gray-400 mt-2"># Run in development</div>
+                <div className="text-white">python -m devos --help</div>
+    
+  
+
+
+        </div>
+      </section>
+
+      {/* Troubleshooting */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Troubleshooting</h2>
+          
+          <div className="space-y-6">
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">Common Issues</h3>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-2">Command not found</h4>
+                  <p className="text-gray-600 mb-2">Use <code className="bg-gray-100 px-2 py-1 rounded">python -m devos</code> instead of just <code className="bg-gray-100 px-2 py-1 rounded">devos</code></p>
+      
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-2">Permission denied</h4>
+                  <p className="text-gray-600 mb-2">Check file permissions and ensure you have write access to the project directory</p>
+      
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-2">AI features not working</h4>
+                  <p className="text-gray-600 mb-2">Configure AI provider and API keys in the configuration settings</p>
+      
+    
+  
+
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">Getting Help</h3>
+              <div className="space-y-3">
+                <div className="flex items-center">
+                  <Book className="h-5 w-5 text-gray-400 mr-3" />
+                  <span className="text-gray-600">Check the <a href="#" className="text-gray-900 hover:text-gray-700">GitHub Wiki</a> for detailed guides</span>
+      
+                <div className="flex items-center">
+                  <Github className="h-5 w-5 text-gray-400 mr-3" />
+                  <span className="text-gray-600">Open an issue on <a href="#" className="text-gray-900 hover:text-gray-700">GitHub</a> for bugs</span>
+      
+                <div className="flex items-center">
+                  <Users className="h-5 w-5 text-gray-400 mr-3" />
+                  <span className="text-gray-600">Join our <a href="#" className="text-gray-900 hover:text-gray-700">Discord community</a> for support</span>
+      
+    
+  
+
+
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="flex items-center justify-center space-x-2 mb-4">
+              <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
+                <Terminal className="h-5 w-5 text-gray-900" />
+    
+              <span className="text-xl font-bold">DevOS</span>
+  
+            <p className="text-gray-400 mb-4">Open source development workflow automation for everyone.</p>
+            <div className="flex justify-center space-x-6 mb-8">
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">GitHub</a>
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">Documentation</a>
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">Community</a>
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">Issues</a>
+  
+            <div className="text-center text-gray-400 pt-8 border-t border-gray-800">
+              <p>© 2026 DevOS CLI. Open source and community-driven.</p>
+  
+
+
+        </div>
+      </footer>
+
+      {/* Modal */}
+      {activeModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] flex flex-col">
+            <div className="sticky top-0 bg-white border-b border-gray-200 p-4 sm:p-6 flex justify-between items-center flex-shrink-0">
+              <div className="flex items-center space-x-3 min-w-0 flex-1">
+                <div className="flex-shrink-0">
+                  {featureDetails[activeModal as keyof typeof featureDetails].icon}
+      
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 truncate">
+                  {featureDetails[activeModal as keyof typeof featureDetails].title}
+                </h2>
+    
+              <button 
+                onClick={closeModal}
+                className="text-gray-400 hover:text-gray-600 transition-colors flex-shrink-0 ml-2"
+              >
+                <X className="h-6 w-6" />
+              </Button>
+            </div>
+          </div>
+  
+  
+            
+            <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400" style={{maxHeight: 'calc(90vh - 120px)'}}>
+              <p className="text-gray-600 mb-8 text-lg">
+                {featureDetails[activeModal as keyof typeof featureDetails].description}
+              </p>
+              
+              <div className="mb-8">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Key Features</h3>
+                <ul className="space-y-3">
+                  {featureDetails[activeModal as keyof typeof featureDetails].features.map((feature, index) => (
+                    <li key={index} className="flex items-start">
+                      <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-700">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+    
+              
+              <div className="mb-8">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Common Commands</h3>
+                <div className="space-y-3">
+                  {featureDetails[activeModal as keyof typeof featureDetails].commands.map((command, index) => (
+                    <div key={index} className="bg-gray-900 rounded-lg p-4">
+                      <div className="text-green-400 text-sm mb-2">{command.description}</div>
+                      <div className="text-white font-mono text-sm">{command.code}</div>
+          
+                  ))}
+      
+    
+  
+
+
+        </div>
+      )}
+    </div>
+  );
+}
