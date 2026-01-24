@@ -30,4 +30,4 @@ jobs:
     
     - name: Run Pylint
       run: |
-        pylint src/devos --rcfile=.pylintrc --max-line-length=120
+        python -m pylint src/devos --rcfile=.pylintrc --max-line-length=120
