@@ -21,7 +21,7 @@ DevOs is a comprehensive CLI tool designed to streamline your development workfl
 
 ### From PyPI (Recommended)
 ```bash
-pip install devos
+pip install devos-cli
 ```
 
 ### From Source
@@ -35,61 +35,61 @@ pip install -e ".[dev]"
 
 ```bash
 # Initialize a new project
-devos init python-api
+python -m devos init python-api
 
 # Start tracking your work session
-devos track start
+python -m devos track start
 
 # Configure AI provider
-devos ai config --provider groq --api-key your-groq-key
+python -m devos ai config --provider groq --api-key your-groq-key
 
 # Set environment variables
-devos env set DATABASE_URL postgresql://...
+python -m devos env set DATABASE_URL postgresql://...
 
 # Generate weekly productivity report
-devos report weekly
+python -m devos report weekly
 
 # Ship a new version
-devos ship minor
+python -m devos ship minor
 
 # Start interactive dashboard
-devos dashboard
+python -m devos dashboard
 ```
 
 ## 📋 Core Commands
 
 ### Project Management
-- `devos init <template>` - Initialize new project with templates
-- `devos project <action>` - Project-specific operations
-- `devos quick <task>` - Quick access to common tasks
+- `python -m devos init <template>` - Initialize new project with templates
+- `python -m devos project <action>` - Project-specific operations
+- `python -m devos quick <task>` - Quick access to common tasks
 
 ### AI Integration
-- `devos ai chat` - Interactive AI chat interface
-- `devos ai config` - Configure AI providers and settings
-- `devos groq chat` - Groq-specific AI chat
-- `devos groq enhanced` - Enhanced Groq interactions
+- `python -m devos ai chat` - Interactive AI chat interface
+- `python -m devos ai config` - Configure AI providers and settings
+- `python -m devos groq chat` - Groq-specific AI chat
+- `python -m devos groq enhanced` - Enhanced Groq interactions
 
 ### Work Tracking
-- `devos track start/stop` - Start/stop work sessions
-- `devos history` - View work history
-- `devos report <type>` - Generate productivity reports
+- `python -m devos track start/stop` - Start/stop work sessions
+- `python -m devos history` - View work history
+- `python -m devos report <type>` - Generate productivity reports
 
 ### Environment Management
-- `devos env set <key>` - Set environment variables
-- `devos env list` - List all environment variables
-- `devos env export` - Export environment configuration
+- `python -m devos env set <key>` - Set environment variables
+- `python -m devos env list` - List all environment variables
+- `python -m devos env export` - Export environment configuration
 
 ### Release & Deployment
-- `devos ship <version>` - Automated version bumping and release
-- `devos deploy <target>` - Deploy to various platforms
+- `python -m devos ship <version>` - Automated version bumping and release
+- `python -m devos deploy <target>` - Deploy to various platforms
 
 ### Documentation
-- `devos docs generate` - Auto-generate project documentation
-- `devos docs serve` - Serve documentation locally
+- `python -m devos docs generate` - Auto-generate project documentation
+- `python -m devos docs serve` - Serve documentation locally
 
 ### Dashboard
-- `devos dashboard` - Interactive productivity dashboard
-- `devos interactive` - Interactive mode for complex operations
+- `python -m devos dashboard` - Interactive productivity dashboard
+- `python -m devos interactive` - Interactive mode for complex operations
 
 ## 🎨 Available Templates
 

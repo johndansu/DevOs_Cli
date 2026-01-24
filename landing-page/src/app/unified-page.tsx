@@ -639,9 +639,11 @@ export default function UnifiedDevOSPage() {
             </div>
             
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" className="text-gray-700 hover:text-gray-900">
-                <Github className="mr-2 h-4 w-4" />
-                GitHub
+              <Button variant="ghost" className="text-gray-700 hover:text-gray-900" asChild>
+                <a href="https://github.com/johndansu/DevOs_Cli" target="_blank" rel="noopener noreferrer">
+                  <Github className="mr-2 h-4 w-4" />
+                  GitHub
+                </a>
               </Button>
             </div>
           </div>
@@ -668,14 +670,19 @@ export default function UnifiedDevOSPage() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              <Button size="lg" className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3 text-lg">
-                <Download className="mr-2 h-5 w-5" />
-                Download Now
-                <ArrowRight className="ml-2 h-5 w-5" />
+              <Button size="lg" className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3 text-lg" asChild>
+                <a href="https://pypi.org/project/devos-cli/" target="_blank" rel="noopener noreferrer">
+                  <Package className="mr-2 h-5 w-5" />
+                  Install on PyPI
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </a>
               </Button>
-              <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:border-gray-400 hover:text-gray-900 px-8 py-3 text-lg">
-                <Github className="mr-2 h-5 w-5" />
-                View on GitHub
+              <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:border-gray-400 hover:text-gray-900 px-8 py-3 text-lg" asChild>
+                <a href="https://github.com/johndansu/DevOs_Cli" target="_blank" rel="noopener noreferrer">
+                  <Github className="mr-2 h-5 w-5" />
+                  View on GitHub
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </a>
               </Button>
             </div>
             
@@ -884,9 +891,11 @@ export default function UnifiedDevOSPage() {
                 <p className="text-gray-600 mb-4">
                   Every line of code is publicly available for review, learning, and contribution.
                 </p>
-                <Button variant="outline" className="w-full border-gray-300 text-gray-700 hover:border-gray-400">
-                  <Github className="mr-2 h-4 w-4" />
-                  Visit Repository
+                <Button variant="outline" className="w-full border-gray-300 text-gray-700 hover:border-gray-400" asChild>
+                  <a href="https://github.com/johndansu/DevOs_Cli" target="_blank" rel="noopener noreferrer">
+                    <Github className="mr-2 h-4 w-4" />
+                    Visit Repository
+                  </a>
                 </Button>
               </CardContent>
             </Card>
@@ -1388,7 +1397,7 @@ export default function UnifiedDevOSPage() {
                 <a href="#commands" className="text-gray-600 hover:text-gray-900 transition-colors">Commands</a>
                 <a href="/docs" className="text-gray-600 hover:text-gray-900 transition-colors">Documentation</a>
                 <a href="#installation" className="text-gray-600 hover:text-gray-900 transition-colors">Installation</a>
-                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
+                <a href="https://github.com/johndansu/DevOs_Cli" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
                   <Github className="h-5 w-5" />
                 </a>
               </div>
