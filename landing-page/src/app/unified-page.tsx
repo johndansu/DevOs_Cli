@@ -551,9 +551,9 @@ export default function UnifiedDevOSPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-100">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
+      <nav className="sticky top-0 z-50 bg-gray-100 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
@@ -921,7 +921,7 @@ export default function UnifiedDevOSPage() {
           {/* Category Description */}
           {currentCategory && (
             <div className="text-center mb-8">
-              <div className="inline-flex items-center px-3 py-1 rounded-full bg-white border border-gray-300">
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 border border-gray-300">
                 {currentCategory.icon}
                 <span className="ml-2 text-gray-700">{currentCategory.description}</span>
               </div>
@@ -1217,22 +1217,22 @@ export default function UnifiedDevOSPage() {
           <div className="mt-16">
             <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Quick Links</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+              <div className="bg-gray-100 p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
                 <h4 className="font-semibold text-gray-900 mb-2">Installation</h4>
                 <p className="text-gray-600 text-sm mb-4">Install DevOS CLI on your system</p>
                 <a href="#" className="text-blue-600 hover:text-blue-700 text-sm font-medium">Install →</a>
               </div>
-              <div className="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+              <div className="bg-gray-100 p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
                 <h4 className="font-semibold text-gray-900 mb-2">Configuration</h4>
                 <p className="text-gray-600 text-sm mb-4">Configure DevOS for your workflow</p>
                 <a href="#" className="text-blue-600 hover:text-blue-700 text-sm font-medium">Configure →</a>
               </div>
-              <div className="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+              <div className="bg-gray-100 p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
                 <h4 className="font-semibold text-gray-900 mb-2">Troubleshooting</h4>
                 <p className="text-gray-600 text-sm mb-4">Common issues and solutions</p>
                 <a href="#" className="text-blue-600 hover:text-blue-700 text-sm font-medium">Troubleshoot →</a>
               </div>
-              <div className="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+              <div className="bg-gray-100 p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
                 <h4 className="font-semibold text-gray-900 mb-2">Community</h4>
                 <p className="text-gray-600 text-sm mb-4">Get help from the community</p>
                 <a href="#" className="text-blue-600 hover:text-blue-700 text-sm font-medium">Join →</a>
@@ -1318,7 +1318,7 @@ export default function UnifiedDevOSPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
                   <Terminal className="h-5 w-5 text-gray-900" />
                 </div>
                 <span className="text-xl font-bold">DevOS</span>

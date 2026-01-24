@@ -173,9 +173,9 @@ export default function DocsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-100">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
+      <nav className="sticky top-0 z-50 bg-gray-100 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
@@ -261,7 +261,7 @@ export default function DocsPage() {
       </section>
 
       {/* Table of Contents */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Table of Contents</h2>
           
@@ -327,21 +327,21 @@ export default function DocsPage() {
               </div>
               
               <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white p-6 rounded-lg border border-gray-200">
+                <div className="bg-gray-100 p-6 rounded-lg border border-gray-200">
                   <div className="flex items-center mb-4">
                     <Terminal className="h-6 w-6 text-gray-900 mr-3" />
                     <h3 className="font-semibold text-gray-900">50+ Commands</h3>
                   </div>
                   <p className="text-gray-600">Comprehensive command coverage for all development needs</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg border border-gray-200">
+                <div className="bg-gray-100 p-6 rounded-lg border border-gray-200">
                   <div className="flex items-center mb-4">
                     <Cpu className="h-6 w-6 text-gray-900 mr-3" />
                     <h3 className="font-semibold text-gray-900">AI-Powered</h3>
                   </div>
                   <p className="text-gray-600">Intelligent code analysis and automation capabilities</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg border border-gray-200">
+                <div className="bg-gray-100 p-6 rounded-lg border border-gray-200">
                   <div className="flex items-center mb-4">
                     <Github className="h-6 w-6 text-gray-900 mr-3" />
                     <h3 className="font-semibold text-gray-900">Open Source</h3>
@@ -573,7 +573,7 @@ export default function DocsPage() {
           
           <div className="space-y-12">
             {commandCategories.map((category) => (
-              <div key={category.id} className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+              <div key={category.id} className="bg-gray-100 rounded-lg border border-gray-200 overflow-hidden">
                 <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
                   <div className="flex items-center space-x-3">
                     <div className="text-gray-600">{category.icon}</div>
@@ -803,7 +803,7 @@ export default function DocsPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
                   <Terminal className="h-5 w-5 text-gray-900" />
                 </div>
                 <span className="text-xl font-bold">DevOS</span>
