@@ -1,0 +1,46 @@
+name: Pylint Code Quality
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  pylint:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, "3.10", "3.11", "3.12"]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pylint
+        pip install -e ".[dev]"
+    
+    - name: Run Pylint
+      run: |
+        pylint src/devos --disable=duplicate-code,trailing-whitespace,logging-fstring-interpolation,raise-missing-from,too-many-arguments,too-many-positional-arguments,unused-argument,global-statement,unused-import,f-string-without-interpolation,line-too-long,broad-exception-caught,too-few-public-methods,no-else-return,no-else-raise,no-else-continue,too-many-instance-attributes,unused-variable,too-many-locals,wrong-import-order,unnecessary-pass,import-outside-toplevel,unspecified-encoding,redefined-builtin,redefined-outer-name,no-value-for-parameter,undefined-variable,subprocess-run-check,too-many-public-methods,attribute-defined-outside-init,disallowed-name,bare-except,unnecessary-lambda-assignment,cell-var-from-loop,no-else-break,pointless-string-statement,too-many-return-statements,fixme,consider-using-in,wrong-import-position,unsubscriptable-object,too-many-branches,too-many-statements,assignment-from-no-return,too-many-nested-blocks,inconsistent-return-statements,reimported,config-parse-error,import-error --output-format=github-actions-max-line-length=120
+    
+    - name: Check Pylint Score
+      run: |
+        SCORE=$(pylint src/devos --disable=duplicate-code,trailing-whitespace,logging-fstring-interpolation,raise-missing-from,too-many-arguments,too-many-positional-arguments,unused-argument,global-statement,unused-import,f-string-without-interpolation,line-too-long,broad-exception-caught,too-few-public-methods,no-else-return,no-else-raise,no-else-continue,too-many-instance-attributes,unused-variable,too-many-locals,wrong-import-order,unnecessary-pass,import-outside-toplevel,unspecified-encoding,redefined-builtin,redefined-outer-name,no-value-for-parameter,undefined-variable,subprocess-run-check,too-many-public-methods,attribute-defined-outside-init,disallowed-name,bare-except,unnecessary-lambda-assignment,cell-var-from-loop,no-else-break,pointless-string-statement,too-many-return-statements,fixme,consider-using-in,wrong-import-position,unsubscriptable-object,too-many-branches,too-many-statements,assignment-from-no-return,too-many-nested-blocks,inconsistent-return-statements,reimported,config-parse-error,import-error --output-format=text | grep -o 'Your code has been rated at [0-9.]*' | grep -o '[0-9.]*' || echo "0")
+        echo "Pylint score: $SCORE"
+        
+        # Fail if score is below 6.0
+        if (( $(echo "$SCORE < 6.0" | bc -l) )); then
+          echo "Pylint score ($SCORE) is below minimum threshold (6.0)"
+          exit 1
+        fi
+        
+        echo "✅ Pylint score ($SCORE) meets minimum requirements"
