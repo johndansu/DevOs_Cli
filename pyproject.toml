@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "devos"
+name = "devos-cli"
 version = "0.1.0"
 description = "One command-line to manage your entire dev life"
 authors = [{name = "DevOS Team"}]

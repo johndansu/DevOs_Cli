@@ -37,25 +37,25 @@ import {
 const features = [
   {
     icon: <Terminal className="h-6 w-6" />,
-    title: "Smart Project Management",
-    description: "Initialize projects with intelligent templates and best practices built-in",
+    title: "Complete Command Suite",
+    description: "50+ commands covering project management, AI analysis, workflow automation, and personal productivity",
     color: "bg-gray-100 text-gray-600"
   },
   {
     icon: <Zap className="h-6 w-6" />,
-    title: "Automatic Session Tracking",
-    description: "Focus on coding while we track your development time automatically",
+    title: "Intelligent Automation",
+    description: "AI-powered code analysis, security scanning, and automated development workflows",
     color: "bg-gray-100 text-gray-600"
   },
   {
     icon: <Shield className="h-6 w-6" />,
-    title: "Secure Environment Storage",
-    description: "Military-grade encryption for all your environment variables and secrets",
+    title: "Privacy-First Design",
+    description: "Local data storage, encrypted environment variables, and optional AI integration",
     color: "bg-gray-100 text-gray-600"
   },
   {
     icon: <Github className="h-6 w-6" />,
-    title: "Open Source & Community Driven",
+    title: "Open Source & Extensible",
     description: "Built by developers, for developers. Contribute, fork, and customize to your needs",
     color: "bg-gray-100 text-gray-600"
   }
@@ -78,6 +78,114 @@ const metrics = [
 ];
 
 const commandCategories = [
+  {
+    id: "ai-integration",
+    title: "AI Integration",
+    icon: <Cpu className="h-5 w-5" />,
+    description: "AI-powered development assistance with multiple providers",
+    commands: [
+      {
+        name: "devos ai-config",
+        description: "Manage AI provider configurations and API keys",
+        usage: [
+          "devos ai-config show",
+          "devos ai-config set-api-key groq",
+          "devos ai-config list-providers",
+          "devos ai-config test groq"
+        ],
+        arguments: [
+          { name: "action", description: "Action to perform: show, set-api-key, list-providers, test" },
+          { name: "provider", description: "AI provider: groq, openai, anthropic" }
+        ]
+      },
+      {
+        name: "devos ai",
+        description: "General AI assistance commands",
+        usage: [
+          "devos ai review main.py",
+          "devos ai explain function.py --line 25",
+          "devos ai refactor old_function.py",
+          "devos ai test mymodule.py",
+          "devos ai generate \"create a REST API endpoint\""
+        ],
+        options: [
+          { flag: "--provider", short: "-p", description: "AI provider to use (openai, groq, anthropic)" },
+          { flag: "--model", short: "-m", description: "AI model to use" },
+          { flag: "--temperature", short: "-t", description: "AI response temperature (0.0-1.0)" },
+          { flag: "--max-tokens", description: "Maximum tokens in response" }
+        ]
+      },
+      {
+        name: "devos ai analyze",
+        description: "Comprehensive code analysis with AI insights",
+        usage: [
+          "devos ai analyze \"comprehensive project review\"",
+          "devos ai analyze main.py",
+          "devos ai analyze --scope current"
+        ],
+        options: [
+          { flag: "--scope", description: "Analysis scope: current, project, all" },
+          { flag: "--export", description: "Export results to file" },
+          { flag: "--format", description: "Export format: json, markdown" }
+        ]
+      },
+      {
+        name: "devos ai security-scan",
+        description: "AI-powered security vulnerability scanner",
+        usage: [
+          "devos ai security-scan",
+          "devos ai security-scan --severity high",
+          "devos ai security-scan --export security-report.json"
+        ],
+        options: [
+          { flag: "--path", short: "-p", description: "Path to scan" },
+          { flag: "--severity", description: "Minimum severity: low, medium, high" },
+          { flag: "--export", description: "Export report to file" }
+        ]
+      },
+      {
+        name: "devos ai architecture-map",
+        description: "AI-powered architecture analysis and mapping",
+        usage: [
+          "devos ai architecture-map",
+          "devos ai architecture-map --patterns mvc",
+          "devos ai architecture-map --export architecture.json"
+        ],
+        options: [
+          { flag: "--patterns", description: "Focus on specific architecture patterns" },
+          { flag: "--export", description: "Export results to file" },
+          { flag: "--depth", description: "Analysis depth: shallow, medium, deep" }
+        ]
+      },
+      {
+        name: "devos ai enhance",
+        description: "AI-powered code enhancement and improvement suggestions",
+        usage: [
+          "devos ai enhance",
+          "devos ai enhance main.py",
+          "devos ai enhance --focus performance"
+        ],
+        options: [
+          { flag: "--focus", description: "Focus areas: performance, security, readability" },
+          { flag: "--auto-apply", description: "Automatically apply safe suggestions" }
+        ]
+      },
+      {
+        name: "devos ai project-summary",
+        description: "Generate comprehensive AI-powered project summary",
+        usage: [
+          "devos ai project-summary",
+          "devos ai project-summary --export summary.md",
+          "devos ai project-summary --recommendations"
+        ],
+        options: [
+          { flag: "--detailed", description: "Include detailed analysis" },
+          { flag: "--export", description: "Export summary to file" },
+          { flag: "--recommendations", description: "Include AI recommendations" }
+        ]
+      }
+    ]
+  },
   {
     id: "quick-start",
     title: "Quick Start",
@@ -373,58 +481,6 @@ const commandCategories = [
     ]
   },
   {
-    id: "reports",
-    title: "Reports",
-    icon: <FileText className="h-5 w-5" />,
-    description: "Generate productivity and project reports",
-    commands: [
-      {
-        name: "devos report weekly",
-        description: "Generate weekly productivity report",
-        usage: [
-          "devos report weekly",
-          "devos report weekly --project my-project",
-          "devos report weekly --format markdown",
-          "devos report weekly --output weekly-report.md"
-        ],
-        options: [
-          { flag: "--project", short: "-p", description: "Filter by project name or path" },
-          { flag: "--format", short: "-f", description: "Output format: table, json, markdown (default: table)" },
-          { flag: "--output", short: "-o", description: "Output file path" }
-        ]
-      },
-      {
-        name: "devos report summary",
-        description: "Generate summary report for a time period",
-        usage: [
-          "devos report summary",
-          "devos report summary --days 60",
-          "devos report summary --project my-project",
-          "devos report summary --format json"
-        ],
-        options: [
-          { flag: "--project", short: "-p", description: "Filter by project name or path" },
-          { flag: "--days", short: "-d", description: "Number of days to include (default: 30)" },
-          { flag: "--format", short: "-f", description: "Output format: table, json, markdown (default: table)" },
-          { flag: "--output", short: "-o", description: "Output file path" }
-        ]
-      },
-      {
-        name: "devos report projects",
-        description: "Generate project breakdown report",
-        usage: [
-          "devos report projects",
-          "devos report projects --format markdown",
-          "devos report projects --output projects.md"
-        ],
-        options: [
-          { flag: "--format", short: "-f", description: "Output format: table, json, markdown (default: table)" },
-          { flag: "--output", short: "-o", description: "Output file path" }
-        ]
-      }
-    ]
-  },
-  {
     id: "configuration",
     title: "Configuration",
     icon: <Settings className="h-5 w-5" />,
@@ -574,12 +630,12 @@ export default function UnifiedDevOSPage() {
               >
                 Commands
               </button>
-              <button 
-                onClick={() => scrollToSection("docs")}
-                className={`text-gray-600 hover:text-gray-900 transition-colors ${activeSection === "docs" ? "text-gray-900" : ""}`}
+              <a 
+                href="/docs"
+                className="text-gray-600 hover:text-gray-900 transition-colors"
               >
                 Docs
-              </button>
+              </a>
             </div>
             
             <div className="flex items-center space-x-4">
@@ -602,13 +658,13 @@ export default function UnifiedDevOSPage() {
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              The open-source tool that
+              The open source CLI that
               <span className="block text-gray-600">manages your entire dev life</span>
             </h1>
             
             <p className="text-xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
-              DevOS CLI is the open-source development tool that automates project setup, 
-              tracks your sessions, and manages your environment—no PATH modifications required.
+              DevOS CLI is the complete development toolkit with project automation, session tracking, 
+              environment management, AI-powered analysis, and team collaboration—no PATH modifications required.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
@@ -735,10 +791,10 @@ export default function UnifiedDevOSPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Everything you need to build better
+              Everything you need in one CLI
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              From project initialization to deployment tracking, DevOS has you covered
+              From project setup to AI-powered analysis, DevOS CLI provides a complete development toolkit
             </p>
           </div>
 
@@ -765,10 +821,10 @@ export default function UnifiedDevOSPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              See it in action
+              Powerful CLI commands in action
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Simple commands that do powerful things
+              Simple commands that leverage advanced features for maximum productivity
             </p>
           </div>
 
@@ -956,10 +1012,12 @@ export default function UnifiedDevOSPage() {
                       <CardContent className="space-y-6">
                         {/* Usage Examples */}
                         <div>
-                          <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center">
-                            <Code className="h-5 w-5 mr-2 text-blue-600" />
-                            Usage Examples
-                          </h4>
+                          <h1 className="text-4xl sm:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                            DevOS CLI
+                            <span className="block text-2xl sm:text-3xl text-blue-600 mt-2">
+                              AI-Powered Development Assistant
+                            </span>
+                          </h1>
                           <div className="space-y-2">
                             {command.usage.map((usage, usageIndex) => (
                               <div key={usageIndex} className="flex items-center justify-between bg-gray-900 rounded-lg p-4">
@@ -1325,10 +1383,19 @@ export default function UnifiedDevOSPage() {
             
             <div>
               <h3 className="font-semibold mb-4">Quick Links</h3>
+              <div className="hidden md:flex items-center space-x-8">
+                <a href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
+                <a href="#commands" className="text-gray-600 hover:text-gray-900 transition-colors">Commands</a>
+                <a href="/docs" className="text-gray-600 hover:text-gray-900 transition-colors">Documentation</a>
+                <a href="#installation" className="text-gray-600 hover:text-gray-900 transition-colors">Installation</a>
+                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
+                  <Github className="h-5 w-5" />
+                </a>
+              </div>
               <div className="space-y-2 text-gray-400">
-                <a href="#features" className="block hover:text-white transition-colors">Features</a>
-                <a href="#commands" className="block hover:text-white transition-colors">Commands</a>
-                <a href="#installation" className="block hover:text-white transition-colors">Installation</a>
+                <a href="#" className="block hover:text-white transition-colors">Documentation</a>
+                <a href="#" className="block hover:text-white transition-colors">Command Reference</a>
+                <a href="#" className="block hover:text-white transition-colors">GitHub Wiki</a>
               </div>
             </div>
             

@@ -14,6 +14,7 @@ from devos.core.progress import show_success, show_info, show_warning, show_oper
 from devos.core.ai_config import get_ai_config_manager, initialize_ai_providers
 from devos.core.ai import get_ai_service, AIServiceError, UserPreferences
 from devos.core.ai.enhanced_context import EnhancedContextBuilder
+from devos.core.export.markdown import MarkdownExporter
 
 
 @click.command()
@@ -23,7 +24,8 @@ from devos.core.ai.enhanced_context import EnhancedContextBuilder
 @click.option('--max-tokens', type=int, default=2000, help='Maximum tokens')
 @click.option('--scope', type=click.Choice(['file', 'directory', 'project']), default='project', help='Analysis scope')
 @click.option('--focus', type=click.Choice(['security', 'architecture', 'performance', 'all']), default='all', help='Focus area')
-def groq_analyze(query: str, model: str, temp: float, max_tokens: int, scope: str, focus: str):
+@click.option('--export-md', help='Export results to Markdown file')
+def groq_analyze(query: str, model: str, temp: float, max_tokens: int, scope: str, focus: str, export_md: Optional[str]):
     """Analyze project with deep AI understanding.
     
     Examples:
@@ -78,9 +80,12 @@ def groq_analyze(query: str, model: str, temp: float, max_tokens: int, scope: st
                 }
             )
             
+            # Build concise context summary instead of full JSON
+            context_summary = _build_concise_context_summary(enhanced_context, scope, focus)
+            
             click.echo("🔄 AI analyzing project...")
             response = await ai_service.analyze_code(
-                code=json.dumps(asdict(enhanced_context), default=str, indent=2),
+                code=context_summary,
                 project_path=project_path,
                 user_preferences=UserPreferences(
                     coding_style="clean",
@@ -115,6 +120,30 @@ def groq_analyze(query: str, model: str, temp: float, max_tokens: int, scope: st
             if response.metrics:
                 click.echo(f"📈 Metrics: {response.metrics}")
             
+            # Export to Markdown if requested
+            if export_md:
+                try:
+                    exporter = MarkdownExporter()
+                    
+                    # Prepare analysis data for export
+                    analysis_data = {
+                        'issues': response.issues,
+                        'suggestions': response.suggestions,
+                        'score': response.score,
+                        'metrics': response.metrics
+                    }
+                    
+                    output_path = exporter.export_analysis(
+                        analysis_result=analysis_data,
+                        query=query,
+                        enhanced_context=enhanced_context,
+                        filename=export_md
+                    )
+                    
+                    show_success(f"Analysis exported to: {output_path}")
+                except Exception as e:
+                    show_warning(f"Failed to export analysis: {e}")
+            
         except AIServiceError as e:
             show_warning(f"AI analysis failed: {e}")
         except Exception as e:
@@ -128,7 +157,8 @@ def groq_analyze(query: str, model: str, temp: float, max_tokens: int, scope: st
 @click.option('--temp', type=float, default=0.2, help='Temperature (0.0-1.0)')
 @click.option('--max-tokens', type=int, default=3000, help='Maximum tokens')
 @click.option('--severity', type=click.Choice(['low', 'medium', 'high', 'critical']), default='medium', help='Minimum severity level')
-def groq_security_scan(model: str, temp: float, max_tokens: int, severity: str):
+@click.option('--export-md', help='Export results to Markdown file')
+def groq_security_scan(model: str, temp: float, max_tokens: int, severity: str, export_md: Optional[str]):
     """Comprehensive security vulnerability scan.
     
     Examples:
@@ -250,6 +280,57 @@ Focus on practical, actionable advice."""
                     click.echo(f"\n📊 Analysis Score: {response.score}/100")
                 if hasattr(response, 'metrics') and response.metrics:
                     click.echo(f"📈 Metrics: {response.metrics}")
+                
+                # Export to Markdown if requested
+                if export_md:
+                    try:
+                        exporter = MarkdownExporter()
+                        
+                        # Prepare vulnerability data for export
+                        vulnerabilities_data = []
+                        for vuln in filtered_vulnerabilities:
+                            vulnerabilities_data.append({
+                                'type': vuln.type,
+                                'severity': vuln.severity,
+                                'file': vuln.file,
+                                'line': vuln.line,
+                                'description': vuln.description,
+                                'recommendation': vuln.recommendation
+                            })
+                        
+                        # Prepare AI recommendations for export
+                        recommendations_data = []
+                        if hasattr(response, 'suggestions') and response.suggestions:
+                            for suggestion in response.suggestions:
+                                if hasattr(suggestion, '__dict__'):
+                                    recommendations_data.append({
+                                        'title': getattr(suggestion, 'title', 'Recommendation'),
+                                        'description': getattr(suggestion, 'description', ''),
+                                        'code': getattr(suggestion, 'code', ''),
+                                        'language': getattr(suggestion, 'language', ''),
+                                        'confidence': getattr(suggestion, 'confidence', 0.0),
+                                        'impact': getattr(suggestion, 'impact', 'medium')
+                                    })
+                                else:
+                                    recommendations_data.append({
+                                        'title': 'Recommendation',
+                                        'description': str(suggestion),
+                                        'code': '',
+                                        'language': '',
+                                        'confidence': 0.0,
+                                        'impact': 'medium'
+                                    })
+                        
+                        output_path = exporter.export_security_scan(
+                            vulnerabilities=vulnerabilities_data,
+                            recommendations=recommendations_data,
+                            enhanced_context=enhanced_context,
+                            filename=export_md
+                        )
+                        
+                        show_success(f"Security scan exported to: {output_path}")
+                    except Exception as e:
+                        show_warning(f"Failed to export security scan: {e}")
             
         except AIServiceError as e:
             show_warning(f"Security scan failed: {e}")
@@ -523,7 +604,8 @@ Focus on practical, implementable improvements."""
 @click.option('--model', default='llama-3.1-8b-instant', help='AI model to use')
 @click.option('--temp', type=float, default=0.2, help='Temperature (0.0-1.0)')
 @click.option('--max-tokens', type=int, default=2000, help='Maximum tokens')
-def groq_project_summary(model: str, temp: float, max_tokens: int):
+@click.option('--export-md', help='Export results to Markdown file')
+def groq_project_summary(model: str, temp: float, max_tokens: int, export_md: Optional[str]):
     """Get comprehensive project summary with AI insights.
     
     Examples:
@@ -539,6 +621,7 @@ def groq_project_summary(model: str, temp: float, max_tokens: int):
             context_builder = EnhancedContextBuilder()
             project_path = Path.cwd()
             
+            enhanced_context = await context_builder.build_enhanced_context(project_path)
             summary = await context_builder.get_project_summary(project_path)
             
             if 'error' in summary:
@@ -636,6 +719,33 @@ Keep it concise and actionable."""
             if response.metrics:
                 click.echo(f"📈 Metrics: {response.metrics}")
             
+            # Export to Markdown if requested
+            if export_md:
+                try:
+                    exporter = MarkdownExporter()
+                    
+                    # Prepare summary data for export
+                    summary_data = {
+                        'issues': response.issues if response.issues else [],
+                        'suggestions': response.suggestions if response.suggestions else [],
+                        'score': response.score,
+                        'metrics': response.metrics if response.metrics else {},
+                        'insights': {
+                            'project_issues': response.issues if response.issues else [],
+                            'recommendations': response.suggestions if response.suggestions else []
+                        }
+                    }
+                    
+                    output_path = exporter.export_project_summary(
+                        summary_data=summary_data,
+                        enhanced_context=enhanced_context,
+                        filename=export_md
+                    )
+                    
+                    show_success(f"Project summary exported to: {output_path}")
+                except Exception as e:
+                    show_warning(f"Failed to export project summary: {e}")
+            
         except Exception as e:
             show_warning(f"Summary generation failed: {e}")
     
@@ -672,3 +782,52 @@ Please provide:
 Consider the project's architecture, security posture, and code quality in your analysis."""
     
     return prompt
+
+
+def _build_concise_context_summary(enhanced_context, scope: str, focus: str) -> str:
+    """Build a concise context summary to avoid token limits."""
+    arch = enhanced_context.architecture
+    
+    # Build basic project info
+    summary = f"""PROJECT ANALYSIS SUMMARY
+========================
+
+Project Type: Python CLI Application
+Total Files: {arch.total_files}
+Total Lines: {arch.total_lines:,}
+Languages: {', '.join(arch.languages.keys())}
+Frameworks: {', '.join(arch.frameworks)}
+Architecture Patterns: {', '.join(arch.architecture_patterns)}
+Security Score: {arch.security_score}/100
+
+"""
+    
+    # Add focus-specific information
+    if focus == 'security' or focus == 'all':
+        summary += f"SECURITY ISSUES ({len(enhanced_context.security_issues)}):\n"
+        for i, issue in enumerate(enhanced_context.security_issues[:5], 1):
+            summary += f"  {i}. {issue.type}: {issue.description[:100]}...\n"
+        if len(enhanced_context.security_issues) > 5:
+            summary += f"  ... and {len(enhanced_context.security_issues) - 5} more\n"
+        summary += "\n"
+    
+    if focus == 'architecture' or focus == 'all':
+        summary += f"KEY FILES:\n"
+        key_files = list(enhanced_context.file_analysis.keys())[:10]
+        for file_path in key_files:
+            analysis = enhanced_context.file_analysis[file_path]
+            summary += f"  - {file_path} ({analysis.language}, {analysis.complexity_score:.1f} complexity)\n"
+        summary += "\n"
+    
+    if focus == 'performance' or focus == 'all':
+        summary += f"CODE SMELLS ({len(enhanced_context.code_smells)}):\n"
+        for i, smell in enumerate(enhanced_context.code_smells[:5], 1):
+            summary += f"  {i}. {smell.get('type', 'unknown')}: {smell.get('message', 'no message')[:80]}...\n"
+        if len(enhanced_context.code_smells) > 5:
+            summary += f"  ... and {len(enhanced_context.code_smells) - 5} more\n"
+        summary += "\n"
+    
+    summary += f"ANALYSIS SCOPE: {scope}\n"
+    summary += f"FOCUS AREA: {focus}\n"
+    
+    return summary

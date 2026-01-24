@@ -19,6 +19,20 @@ class Database:
         self._ensure_database()
         self._init_schema()
     
+    def __enter__(self):
+        """Context manager entry."""
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Context manager exit."""
+        self.close()
+    
+    def close(self):
+        """Close database resources."""
+        # SQLite connections are managed by context managers in individual methods
+        # This method is for explicit cleanup and future connection pooling
+        pass
+    
     def _ensure_database(self):
         """Ensure database directory exists."""
         self.db_path.parent.mkdir(parents=True, exist_ok=True)

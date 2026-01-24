@@ -8,6 +8,7 @@ from typing import Optional
 from devos.core.progress import show_success, show_info, show_warning, show_operation_status
 from devos.core.ai_config import get_ai_config_manager, initialize_ai_providers
 from devos.core.ai import get_ai_service, AIServiceError, UserPreferences
+from devos.core.ai.enhanced_context import EnhancedContextBuilder
 
 
 @click.command()
@@ -16,7 +17,8 @@ from devos.core.ai import get_ai_service, AIServiceError, UserPreferences
 @click.option('--temp', type=float, default=0.7, help='Temperature (0.0-1.0)')
 @click.option('--max-tokens', type=int, default=1000, help='Maximum tokens')
 @click.option('--file', '-f', type=click.Path(exists=True), help='Include file context')
-def groq(prompt: str, model: str, temp: float, max_tokens: int, file: Optional[str]):
+@click.option('--quick', is_flag=True, help='Skip deep analysis for faster response')
+def groq(prompt: str, model: str, temp: float, max_tokens: int, file: Optional[str], quick: bool):
     """Fast AI assistance using Groq.
     
     Examples:
@@ -29,16 +31,38 @@ def groq(prompt: str, model: str, temp: float, max_tokens: int, file: Optional[s
         try:
             ai_service = await get_ai_service()
             
-            # Build full prompt with file context if provided
-            full_prompt = prompt
-            if file:
-                file_path = Path(file)
-                file_content = file_path.read_text()
-                full_prompt += f"\n\nFile: {file}\n```\n{file_content}\n```"
+            if quick:
+                # Quick mode - skip deep analysis
+                show_info("⚡ Quick mode - skipping deep analysis...")
+                full_prompt = prompt
+                
+                if file:
+                    file_path = Path(file)
+                    file_content = file_path.read_text()
+                    full_prompt += f"\n\nFile: {file}\n```\n{file_content}\n```"
+            else:
+                # Build enhanced context for project understanding
+                project_path = Path(file).parent if file else Path.cwd()
+                context_builder = EnhancedContextBuilder()
+                
+                # Build context with progress indication
+                show_info("🔄 Building project context...")
+                enhanced_context = await context_builder.build_enhanced_context(project_path)
+                show_info(f"✅ Analyzed {enhanced_context.architecture.total_files} files")
+                
+                # Create project-specific context prompt
+                context_prompt = _build_project_context_prompt(enhanced_context, prompt)
+                
+                # Build full prompt with file context if provided
+                full_prompt = context_prompt
+                if file:
+                    file_path = Path(file)
+                    file_content = file_path.read_text()
+                    full_prompt += f"\n\nFile: {file}\n```\n{file_content}\n```"
             
             response = await ai_service.generate_code(
                 query=full_prompt,
-                project_path=Path(file).parent if file else Path.cwd(),
+                project_path=Path.cwd(),
                 user_preferences=UserPreferences(
                     coding_style="clean",
                     preferred_patterns=[],
@@ -63,6 +87,47 @@ def groq(prompt: str, model: str, temp: float, max_tokens: int, file: Optional[s
             show_warning(f"Command failed: {e}")
     
     asyncio.run(_run_groq())
+
+
+def _build_project_context_prompt(enhanced_context, user_prompt: str) -> str:
+    """Build project-specific context prompt for AI."""
+    arch = enhanced_context.architecture
+    base_context = enhanced_context.base_context
+    
+    # Detect project type
+    project_type = "Python CLI"
+    if "python" in arch.languages:
+        if "cli" in base_context.project_path.name.lower() or any("cli" in str(f).lower() for f in list(enhanced_context.file_analysis.keys())[:5]):
+            project_type = "Python CLI"
+        elif "django" in arch.frameworks or "flask" in arch.frameworks:
+            project_type = "Python Web"
+        elif "fastapi" in arch.frameworks:
+            project_type = "Python API"
+    
+    # Get key files from file analysis
+    key_files = list(enhanced_context.file_analysis.keys())[:10]
+    
+    context_prompt = f"""You are DevOS AI, an expert assistant for this {project_type} project.
+
+PROJECT OVERVIEW:
+- Name: {base_context.project_path.name}
+- Type: {project_type}
+- Total Files: {arch.total_files}
+- Total Lines: {arch.total_lines:,}
+- Languages: {', '.join(arch.languages.keys())}
+- Frameworks: {', '.join(arch.frameworks)}
+- Architecture Patterns: {', '.join(arch.architecture_patterns)}
+- Security Score: {arch.security_score}/100
+
+KEY FILES:
+{', '.join(key_files)}
+
+CURRENT REQUEST: {user_prompt}
+
+IMPORTANT: Provide responses specific to this {project_type} project. Use Python syntax and best practices. Consider the existing project structure and frameworks.
+"""
+    
+    return context_prompt
 
 
 @click.command()
