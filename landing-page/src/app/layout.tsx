@@ -8,9 +8,9 @@ export const metadata: Metadata = {
   title: "DevOS CLI - One command-line to manage your entire dev life",
   description: "The next-generation command-line tool for modern developers. Build, deploy, and manage your projects with ease.",
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
   },
 };
 
