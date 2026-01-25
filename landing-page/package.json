@@ -1,8 +1,8 @@
 {
   "name": "landing-page",
   "version": "1.0.0",
-  "description": "",
-  "main": "next.config.js",
+  "description": "DevOS CLI Landing Page",
+  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,6 +12,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
     "@radix-ui/react-tabs": "^1.1.13",
