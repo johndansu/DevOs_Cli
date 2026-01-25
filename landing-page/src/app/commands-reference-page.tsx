@@ -491,7 +491,7 @@ export default function CommandsReferencePage() {
                                     <code className="text-blue-600">{option.flag}</code>
                                   </div>
                                   <div>
-                                    <code className="text-purple-600">{option.short}</code>
+                                    <code className="text-purple-600">{'short' in option ? option.short : '-'}</code>
                                   </div>
                                   <div className="text-gray-600 md:col-span-2">{option.description}</div>
                                 </div>
@@ -502,7 +502,7 @@ export default function CommandsReferencePage() {
                       )}
 
                       {/* Arguments */}
-                      {command.arguments && command.arguments.length > 0 && (
+                      {'arguments' in command && command.arguments && command.arguments.length > 0 && (
                         <div>
                           <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center">
                             <FileText className="h-5 w-5 mr-2 text-blue-600" />
@@ -514,7 +514,7 @@ export default function CommandsReferencePage() {
                                 <div>Argument</div>
                                 <div>Description</div>
                               </div>
-                              {command.arguments.map((arg, argIndex) => (
+                              {('arguments' in command ? command.arguments : []).map((arg: any, argIndex: number) => (
                                 <div key={argIndex} className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                                   <div>
                                     <code className="text-orange-600">{arg.name}</code>
@@ -528,14 +528,14 @@ export default function CommandsReferencePage() {
                       )}
 
                       {/* Templates */}
-                      {command.templates && (
+                      {'templates' in command && command.templates && (
                         <div>
                           <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center">
                             <Package className="h-5 w-5 mr-2 text-blue-600" />
                             Available Templates
                           </h4>
                           <div className="flex flex-wrap gap-2">
-                            {command.templates.map((template, templateIndex) => (
+                            {('templates' in command ? command.templates : []).map((template: any, templateIndex: number) => (
                               <span
                                 key={templateIndex}
                                 className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm"
