@@ -20,7 +20,7 @@ export function GET() {
           fontFamily: 'monospace',
         },
       },
-      '$ _'
+      '>_'
     ),
     {
       width: 32,
