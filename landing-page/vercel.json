@@ -1,11 +1,21 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": ".next",
-  "installCommand": "npm install",
-  "framework": "nextjs",
-  "regions": ["iad1"],
-  "cleanUrls": true,
-  "trailingSlash": false,
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -21,15 +31,6 @@
         {
           "key": "X-XSS-Protection",
           "value": "1; mode=block"
-        }
-      ]
-    },
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "s-maxage=86400"
         }
       ]
     },

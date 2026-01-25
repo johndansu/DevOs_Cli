@@ -1,0 +1,24 @@
+{
+  "name": "devos-cli-landing-page",
+  "version": "1.0.0",
+  "description": "Modern landing page for DevOS CLI",
+  "homepage": "https://devos-cli.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johndansu/DevOs_Cli"
+  },
+  "keywords": [
+    "devos",
+    "cli",
+    "landing-page",
+    "nextjs",
+    "typescript",
+    "tailwindcss"
+  ],
+  "author": "John Dansu",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}
