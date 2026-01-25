@@ -1,6 +1,8 @@
 import * as React from "react"
 
-import { cn } from "@/lib/utils-simple"
+function cn(...inputs: (string | undefined)[]) {
+  return inputs.filter(Boolean).join(' ');
+}
 
 function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
