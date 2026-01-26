@@ -21,7 +21,10 @@ import {
   Globe,
   Lock,
   AlertCircle,
-  ChevronRight
+  ChevronRight,
+  Package,
+  Activity,
+  Monitor
 } from "lucide-react";
 
 export default function DocsPage() {
@@ -40,137 +43,796 @@ export default function DocsPage() {
   ];
 
   const commandCategories = [
-    {
-      id: "ai-integration",
-      title: "AI Integration",
-      icon: <Cpu className="h-5 w-5" />,
-      description: "AI-powered development assistance with multiple providers",
-      commands: [
-        {
-          name: "python -m devos quick-ai",
-          description: "Fast AI-powered code generation and assistance",
-          usage: [
-            "python -m devos quick-ai \"create a Python class for user management\"",
-            "python -m devos quick-ai \"explain this function\" main.py",
-            "python -m devos quick-ai \"generate a REST API endpoint\""
-          ],
-          options: [
-            { flag: "--provider", short: "-p", description: "AI provider to use (groq, openai)" },
-            { flag: "--model", short: "-m", description: "AI model to use" }
-          ]
-        },
-        {
-          name: "python -m devos ai chat",
-          description: "Interactive AI conversation with project context",
-          usage: [
-            "python -m devos ai chat",
-            "python -m devos ai chat --context security",
-            "python -m devos ai chat --history"
-          ],
-          options: [
-            { flag: "--context", description: "Chat context: security, architecture, performance" },
-            { flag: "--history", description: "Include conversation history" }
-          ]
-        }
-      ]
-    },
-    {
-      id: "project-management",
-      title: "Project Management",
-      icon: <FileText className="h-5 w-5" />,
-      description: "Organize and manage your development projects",
-      commands: [
-        {
-          name: "python -m devos project init",
-          description: "Initialize a new development project",
-          usage: [
-            "python -m devos project init",
-            "python -m devos project init --template web-app",
-            "python -m devos project init --name my-project"
-          ],
-          options: [
-            { flag: "--template", short: "-t", description: "Project template to use" },
-            { flag: "--name", short: "-n", description: "Project name" }
-          ]
-        },
-        {
-          name: "python -m devos project list",
-          description: "List all available projects",
-          usage: [
-            "python -m devos project list",
-            "python -m devos project list --active"
-          ],
-          options: [
-            { flag: "--active", short: "-a", description: "Show only active projects" }
-          ]
-        }
-      ]
-    },
-    {
-      id: "session-tracking",
-      title: "Session Tracking",
-      icon: <Clock className="h-5 w-5" />,
-      description: "Track and manage development sessions",
-      commands: [
-        {
-          name: "python -m devos session start",
-          description: "Start a new development session",
-          usage: [
-            "python -m devos session start",
-            "python -m devos session start --project my-project",
-            "python -m devos session start --type coding"
-          ],
-          options: [
-            { flag: "--project", short: "-p", description: "Project name" },
-            { flag: "--type", short: "-t", description: "Session type" }
-          ]
-        },
-        {
-          name: "python -m devos session status",
-          description: "Check current session status",
-          usage: [
-            "python -m devos session status",
-            "python -m devos session status --detailed"
-          ],
-          options: [
-            { flag: "--detailed", short: "-d", description: "Show detailed session info" }
-          ]
-        }
-      ]
-    },
-    {
-      id: "environment-management",
-      title: "Environment Management",
-      icon: <Globe className="h-5 w-5" />,
-      description: "Manage development environments and configurations",
-      commands: [
-        {
-          name: "python -m devos env setup",
-          description: "Set up development environment",
-          usage: [
-            "python -m devos env setup",
-            "python -m devos env setup --python 3.9",
-            "python -m devos env setup --node latest"
-          ],
-          options: [
-            { flag: "--python", description: "Python version to install" },
-            { flag: "--node", description: "Node.js version to install" }
-          ]
-        },
-        {
-          name: "python -m devos env list",
-          description: "List available environments",
-          usage: [
-            "python -m devos env list",
-            "python -m devos env list --active"
-          ],
-          options: [
-            { flag: "--active", short: "-a", description: "Show only active environment" }
-          ]
-        }
-      ]
-    }
-  ];
+  {
+    id: "ai-integration",
+    title: "AI Integration",
+    icon: <Cpu className="h-5 w-5" />,
+    description: "AI-powered development assistance with multiple providers",
+    commands: [
+      {
+        name: "python -m devos ai security-scan",
+        description: "Comprehensive security vulnerability scan",
+        usage: [
+          "python -m devos ai security-scan",
+          "python -m devos ai security-scan --severity high",
+          "python -m devos ai security-scan --export-md security.md"
+        ],
+        options: [
+          { flag: "--severity", description: "Filter by severity (low, medium, high, critical)" },
+          { flag: "--export-md", description: "Export results to Markdown file" },
+          { flag: "--model", description: "AI model to use" }
+        ]
+      },
+      {
+        name: "python -m devos ai analyze",
+        description: "Analyze project with deep AI understanding",
+        usage: [
+          "python -m devos ai analyze \"comprehensive project review\"",
+          "python -m devos ai analyze --focus security",
+          "python -m devos ai analyze --export-md analysis.md"
+        ],
+        options: [
+          { flag: "--focus", description: "Focus area: security, architecture, performance, all" },
+          { flag: "--scope", description: "Analysis scope: file, directory, project" },
+          { flag: "--export-md", description: "Export results to Markdown" }
+        ]
+      },
+      {
+        name: "python -m devos ai architecture-map",
+        description: "Generate comprehensive project architecture map",
+        usage: [
+          "python -m devos ai architecture-map",
+          "python -m devos ai architecture-map --patterns mvc"
+        ],
+        options: [
+          { flag: "--patterns", description: "Architecture patterns to analyze" },
+          { flag: "--export-md", description: "Export architecture map" }
+        ]
+      },
+      {
+        name: "python -m devos ai review",
+        description: "AI-powered code review",
+        usage: [
+          "python -m devos ai review main.py",
+          "python -m devos ai review --directory src/"
+        ],
+        options: [
+          { flag: "--directory", short: "-d", description: "Review entire directory" },
+          { flag: "--strict", description: "Enable strict review mode" }
+        ]
+      },
+      {
+        name: "python -m devos ai refactor",
+        description: "AI-powered code refactoring suggestions",
+        usage: [
+          "python -m devos ai refactor old_function.py",
+          "python -m devos ai refactor --suggestions-only"
+        ],
+        options: [
+          { flag: "--suggestions-only", description: "Show suggestions without applying" },
+          { flag: "--backup", description: "Create backup before refactoring" }
+        ]
+      },
+      {
+        name: "python -m devos ai debug",
+        description: "AI-powered debugging assistance",
+        usage: [
+          "python -m devos ai debug main.py --line 25",
+          "python -m devos ai debug --error traceback.log"
+        ],
+        options: [
+          { flag: "--line", short: "-l", description: "Specific line to debug" },
+          { flag: "--error", description: "Error file to analyze" }
+        ]
+      },
+      {
+        name: "python -m devos ai enhance",
+        description: "Enhance codebase with AI-driven improvements",
+        usage: [
+          "python -m devos ai enhance",
+          "python -m devos ai enhance --focus performance"
+        ],
+        options: [
+          { flag: "--focus", description: "Enhancement focus: performance, security, readability" }
+        ]
+      },
+      {
+        name: "python -m devos ai generate",
+        description: "Generate code with project context",
+        usage: [
+          "python -m devos ai generate \"REST API endpoint\"",
+          "python -m devos ai generate --template class"
+        ],
+        options: [
+          { flag: "--template", description: "Code template to use" },
+          { flag: "--language", description: "Programming language" }
+        ]
+      },
+      {
+        name: "python -m devos ai project-summary",
+        description: "Get comprehensive project summary with AI insights",
+        usage: [
+          "python -m devos ai project-summary",
+          "python -m devos ai project-summary --export-md summary.md"
+        ],
+        options: [
+          { flag: "--export-md", description: "Export summary to Markdown" },
+          { flag: "--detailed", description: "Include detailed analysis" }
+        ]
+      },
+      {
+        name: "python -m devos ai suggest",
+        description: "Get contextual AI suggestions",
+        usage: [
+          "python -m devos ai suggest \"optimize this function\"",
+          "python -m devos ai suggest --context testing"
+        ],
+        options: [
+          { flag: "--context", description: "Suggestion context" }
+        ]
+      },
+      {
+        name: "python -m devos ai test",
+        description: "AI-powered test generation",
+        usage: [
+          "python -m devos ai test mymodule.py",
+          "python -m devos ai test --framework pytest"
+        ],
+        options: [
+          { flag: "--framework", description: "Test framework: pytest, unittest" },
+          { flag: "--coverage", description: "Generate coverage tests" }
+        ]
+      },
+      {
+        name: "python -m devos ai explain",
+        description: "AI-powered code explanation",
+        usage: [
+          "python -m devos ai explain function.py",
+          "python -m devos ai explain --line 25"
+        ],
+        options: [
+          { flag: "--line", short: "-l", description: "Specific line to explain" },
+          { flag: "--detail", description: "Detailed explanation" }
+        ]
+      },
+      {
+        name: "python -m devos ai example",
+        description: "Generate code examples",
+        usage: [
+          "python -m devos ai example myapi.py",
+          "python -m devos ai example --usage-patterns"
+        ],
+        options: [
+          { flag: "--usage-patterns", description: "Include usage patterns" }
+        ]
+      },
+      {
+        name: "python -m devos ai chat",
+        description: "Interactive AI conversation with project context",
+        usage: [
+          "python -m devos ai chat",
+          "python -m devos ai chat --context security",
+          "python -m devos ai chat --history"
+        ],
+        options: [
+          { flag: "--context", description: "Chat context: security, architecture, performance" },
+          { flag: "--history", description: "Load previous chat history" }
+        ]
+      },
+      {
+        name: "python -m devos ai-fast",
+        description: "Fast AI assistance using Groq",
+        usage: [
+          "python -m devos ai-fast \"review this code\"",
+          "python -m devos ai-fast explain function.py"
+        ],
+        options: [
+          { flag: "--model", description: "Groq model to use" },
+          { flag: "--quick", description: "Skip deep analysis" }
+        ]
+      },
+      {
+        name: "python -m devos ai-quick",
+        description: "Ultra-fast AI assistance without deep project analysis",
+        usage: [
+          "python -m devos ai-quick \"create a function\"",
+          "python -m devos ai-quick --no-context"
+        ],
+        options: [
+          { flag: "--no-context", description: "Skip project context" }
+        ]
+      },
+      {
+        name: "python -m devos quick-ai",
+        description: "Ultra-fast AI assistance without deep project analysis (alias for ai-quick)",
+        usage: [
+          "python -m devos quick-ai \"create a function\"",
+          "python -m devos quick-ai --no-context"
+        ],
+        options: [
+          { flag: "--no-context", description: "Skip project context" }
+        ]
+      },
+      {
+        name: "python -m devos ai-interactive-chat",
+        description: "Start interactive AI chat with project context",
+        usage: [
+          "python -m devos ai-interactive-chat",
+          "python -m devos ai-interactive-chat --context security"
+        ],
+        options: [
+          { flag: "--context", description: "Chat context: security, architecture, performance" },
+          { flag: "--history", description: "Load previous chat history" },
+          { flag: "--save", description: "Save chat session" }
+        ]
+      },
+      {
+        name: "python -m devos groq",
+        description: "Groq-specific fast AI commands",
+        usage: [
+          "python -m devos groq \"review this code\" main.py",
+          "python -m devos groq explain function.py",
+          "python -m devos groq chat"
+        ],
+        options: [
+          { flag: "--model", short: "-m", description: "Groq model to use" },
+          { flag: "--temp", description: "Temperature (0.0-1.0)" },
+          { flag: "--max-tokens", description: "Maximum tokens" },
+          { flag: "--file", short: "-f", description: "Include file context" },
+          { flag: "--quick", description: "Skip deep analysis" }
+        ]
+      },
+      {
+        name: "python -m devos ai-config",
+        description: "Manage AI configuration and providers",
+        usage: [
+          "python -m devos ai-config show",
+          "python -m devos ai-config set-api-key groq",
+          "python -m devos ai-config test-connection groq"
+        ],
+        options: [
+          { flag: "show-config", description: "Show current AI configuration" },
+          { flag: "set-api-key", description: "Set API key for provider" },
+          { flag: "list-providers", description: "List available AI providers" },
+          { flag: "test-connection", description: "Test provider connection" },
+          { flag: "clear-cache", description: "Clear AI response cache" },
+          { flag: "usage-stats", description: "Show AI usage statistics" }
+        ]
+      }
+    ]
+  },
+  {
+    id: "quick-start",
+    title: "Quick Start",
+    icon: <Zap className="h-5 w-5" />,
+    description: "Shortcuts for the most common operations",
+    commands: [
+      {
+        name: "python -m devos now",
+        description: "Quick start tracking current project",
+        usage: [
+          "python -m devos now"
+        ]
+      },
+      {
+        name: "python -m devos done",
+        description: "Quick stop current tracking session",
+        usage: [
+          "python -m devos done"
+        ]
+      },
+      {
+        name: "python -m devos status",
+        description: "Quick status overview",
+        usage: [
+          "python -m devos status"
+        ]
+      },
+      {
+        name: "python -m devos today",
+        description: "Show today's tracking summary",
+        usage: [
+          "python -m devos today"
+        ]
+      },
+      {
+        name: "python -m devos setup",
+        description: "Quick setup wizard for new users",
+        usage: [
+          "python -m devos setup"
+        ]
+      }
+    ]
+  },
+  {
+    id: "project-management",
+    title: "Project Management",
+    icon: <Package className="h-5 w-5" />,
+    description: "Initialize and manage projects with full lifecycle support",
+    commands: [
+      {
+        name: "python -m devos init",
+        description: "Initialize a new project with templates",
+        usage: [
+          "python -m devos init",
+          "python -m devos init python-api",
+          "python -m devos init --name my-project --language python --path ./my-project"
+        ],
+        options: [
+          { flag: "--name", short: "-n", description: "Project name" },
+          { flag: "--path", short: "-p", description: "Project path (default: current directory)" },
+          { flag: "--language", short: "-l", description: "Programming language" },
+          { flag: "--interactive", short: "-i", description: "Interactive mode" }
+        ],
+        templates: [
+          "python-basic - Basic Python project",
+          "python-api - FastAPI web API",
+          "python-cli - Click CLI tool",
+          "python-web - Flask web app",
+          "javascript-basic - Basic Node.js project",
+          "javascript-api - Express API",
+          "typescript-api - Express API with TypeScript",
+          "go-basic - Basic Go module",
+          "rust-cli - Rust CLI tool"
+        ]
+      },
+      {
+        name: "python -m devos create",
+        description: "Initialize a new project with templates",
+        usage: [
+          "python -m devos create my-project",
+          "python -m devos create --template python-api"
+        ],
+        options: [
+          { flag: "--template", description: "Project template to use" },
+          { flag: "--name", description: "Project name" }
+        ]
+      },
+      {
+        name: "python -m devos new",
+        description: "Initialize a new project with templates",
+        usage: [
+          "python -m devos new my-project",
+          "python -m devos new --template python-api"
+        ],
+        options: [
+          { flag: "--template", description: "Project template to use" },
+          { flag: "--name", description: "Project name" }
+        ]
+      },
+      {
+        name: "python -m devos projects",
+        description: "Quick list of all projects",
+        usage: [
+          "python -m devos projects",
+          "python -m devos projects --active"
+        ],
+        options: [
+          { flag: "--active", description: "Show only active projects" },
+          { flag: "--recent", description: "Show recent projects" }
+        ]
+      },
+      {
+        name: "python -m devos project add",
+        description: "Add an existing project to DevOS management",
+        usage: [
+          "python -m devos project add my-project",
+          "python -m devos project add --path ./my-project --language python",
+          "python -m devos project add --type web --description \"My web app\""
+        ],
+        options: [
+          { flag: "--path", short: "-p", description: "Project path" },
+          { flag: "--language", short: "-l", description: "Programming language" },
+          { flag: "--type", short: "-t", description: "Project type (web, cli, api, etc.)" },
+          { flag: "--description", short: "-d", description: "Project description" },
+          { flag: "--tags", description: "Project tags (comma-separated)" }
+        ]
+      },
+      {
+        name: "python -m devos project list",
+        description: "List all managed projects",
+        usage: [
+          "python -m devos project list",
+          "python -m devos project list --type web",
+          "python -m devos project list --status active",
+          "python -m devos project list --format json"
+        ],
+        options: [
+          { flag: "--type", short: "-t", description: "Filter by project type" },
+          { flag: "--status", short: "-s", description: "Filter by status" },
+          { flag: "--format", short: "-f", description: "Output format: table or json" }
+        ]
+      }
+    ]
+  },
+  {
+    id: "session-tracking",
+    title: "Session Tracking",
+    icon: <Activity className="h-5 w-5" />,
+    description: "Track and manage development sessions",
+    commands: [
+      {
+        name: "python -m devos track start",
+        description: "Start a new work session",
+        usage: [
+          "python -m devos track start",
+          "python -m devos track start --notes \"Working on authentication\"",
+          "python -m devos track start --project my-project"
+        ],
+        options: [
+          { flag: "--project", short: "-p", description: "Project name or path" },
+          { flag: "--notes", short: "-n", description: "Session notes" },
+          { flag: "--tags", short: "-t", description: "Session tags" }
+        ]
+      },
+      {
+        name: "python -m devos track stop",
+        description: "Stop the current work session",
+        usage: [
+          "python -m devos track stop",
+          "python -m devos track stop --notes \"Completed auth module\""
+        ],
+        options: [
+          { flag: "--notes", short: "-n", description: "Session notes" }
+        ]
+      },
+      {
+        name: "python -m devos track status",
+        description: "Show current tracking status and recent sessions",
+        usage: [
+          "python -m devos track status",
+          "python -m devos track status --project my-project",
+          "python -m devos track status --limit 10"
+        ],
+        options: [
+          { flag: "--project", short: "-p", description: "Filter by project name or path" },
+          { flag: "--limit", short: "-l", description: "Number of sessions to show (default: 20)" }
+        ]
+      },
+      {
+        name: "python -m devos track list",
+        description: "List tracking sessions",
+        usage: [
+          "python -m devos track list",
+          "python -m devos track list --project my-project",
+          "python -m devos track list --format json",
+          "python -m devos track list --limit 50"
+        ],
+        options: [
+          { flag: "--project", short: "-p", description: "Filter by project name or path" },
+          { flag: "--limit", short: "-l", description: "Number of sessions to show (default: 50)" },
+          { flag: "--format", short: "-f", description: "Output format: table or json (default: table)" }
+        ]
+      }
+    ]
+  },
+  {
+    id: "environment-variables",
+    title: "Environment Variables",
+    icon: <Shield className="h-5 w-5" />,
+    description: "Manage encrypted environment variables",
+    commands: [
+      {
+        name: "python -m devos env set",
+        description: "Set an environment variable (encrypted)",
+        usage: [
+          "python -m devos env set DATABASE_URL postgresql://...",
+          "python -m devos env set API_KEY your-api-key --encrypt",
+          "python -m devos env set DEBUG true --project my-project"
+        ],
+        options: [
+          { flag: "--encrypt", short: "-e", description: "Encrypt the variable value" },
+          { flag: "--project", short: "-p", description: "Set for specific project" },
+          { flag: "--global", short: "-g", description: "Set globally for all projects" }
+        ]
+      },
+      {
+        name: "python -m devos env get",
+        description: "Get an environment variable value",
+        usage: [
+          "python -m devos env get DATABASE_URL",
+          "python -m devos env get API_KEY --decrypt",
+          "python -m devos env get --all"
+        ],
+        options: [
+          { flag: "--decrypt", short: "-d", description: "Decrypt encrypted variable" },
+          { flag: "--all", short: "-a", description: "Show all environment variables" },
+          { flag: "--project", short: "-p", description: "Get from specific project" }
+        ]
+      },
+      {
+        name: "python -m devos env list",
+        description: "List all environment variables",
+        usage: [
+          "python -m devos env list",
+          "python -m devos env list --project my-project",
+          "python -m devos env list --encrypted-only"
+        ],
+        options: [
+          { flag: "--project", short: "-p", description: "List for specific project" },
+          { flag: "--encrypted-only", description: "Show only encrypted variables" },
+          { flag: "--format", description: "Output format: table or json" }
+        ]
+      },
+      {
+        name: "python -m devos env remove",
+        description: "Remove an environment variable",
+        usage: [
+          "python -m devos env remove DATABASE_URL",
+          "python -m devos env remove API_KEY --project my-project"
+        ],
+        options: [
+          { flag: "--project", short: "-p", description: "Remove from specific project" },
+          { flag: "--global", short: "-g", description: "Remove global variable" }
+        ]
+      },
+      {
+        name: "python -m devos env export",
+        description: "Export environment variables to file",
+        usage: [
+          "python -m devos env export .env",
+          "python -m devos env export --format json",
+          "python -m devos env export --no-decrypt"
+        ],
+        options: [
+          { flag: "--format", description: "Export format: env, json, yaml" },
+          { flag: "--no-decrypt", description: "Don't decrypt encrypted variables" },
+          { flag: "--project", short: "-p", description: "Export from specific project" }
+        ]
+      },
+      {
+        name: "python -m devos env import",
+        description: "Import environment variables from file",
+        usage: [
+          "python -m devos env import .env",
+          "python -m devos env import config.json --format json",
+          "python -m devos env import --encrypt-all"
+        ],
+        options: [
+          { flag: "--format", description: "Import format: env, json, yaml" },
+          { flag: "--encrypt-all", description: "Encrypt all imported variables" },
+          { flag: "--merge", description: "Merge with existing variables" }
+        ]
+      },
+      {
+        name: "python -m devos environment",
+        description: "Environment variable management (alias for env)",
+        usage: [
+          "python -m devos environment set KEY value",
+          "python -m devos environment list"
+        ]
+      }
+    ]
+  },
+  {
+    id: "configuration",
+    title: "Configuration",
+    icon: <Settings className="h-5 w-5" />,
+    description: "Manage DevOS settings and preferences",
+    commands: [
+      {
+        name: "python -m devos config show",
+        description: "Show current configuration",
+        usage: [
+          "python -m devos config show",
+          "python -m devos config show --global"
+        ],
+        options: [
+          { flag: "--global", description: "Show global configuration" }
+        ]
+      },
+      {
+        name: "python -m devos config set",
+        description: "Set a configuration value",
+        usage: [
+          "python -m devos config set default_language python",
+          "python -m devos config set tracking.auto_git true --global"
+        ],
+        options: [
+          { flag: "--global", description: "Set global configuration" }
+        ]
+      },
+      {
+        name: "python -m devos settings",
+        description: "Manage DevOS settings (alias for config)",
+        usage: [
+          "python -m devos settings show",
+          "python -m devos settings set key value"
+        ]
+      }
+    ]
+  },
+  {
+    id: "interactive-mode",
+    title: "Interactive Mode",
+    icon: <Monitor className="h-5 w-5" />,
+    description: "Guided workflows and interactive setup",
+    commands: [
+      {
+        name: "python -m devos interactive",
+        description: "Start interactive mode with guided workflows",
+        usage: [
+          "python -m devos interactive",
+          "python -m devos i",
+          "python -m devos wizard"
+        ]
+      },
+      {
+        name: "python -m devos i",
+        description: "Start interactive mode (alias for interactive)",
+        usage: [
+          "python -m devos i"
+        ]
+      },
+      {
+        name: "python -m devos wizard",
+        description: "Start interactive mode with guided workflows",
+        usage: [
+          "python -m devos wizard"
+        ]
+      },
+      {
+        name: "python -m devos setup",
+        description: "Quick setup wizard for new users",
+        usage: [
+          "python -m devos setup"
+        ]
+      }
+    ]
+  },
+  {
+    id: "shell-completion",
+    title: "Shell Completion",
+    icon: <Terminal className="h-5 w-5" />,
+    description: "Command-line auto-completion setup",
+    commands: [
+      {
+        name: "python -m devos completion",
+        description: "Generate or install shell completion",
+        usage: [
+          "python -m devos completion bash",
+          "python -m devos completion bash --install"
+        ],
+        options: [
+          { flag: "--install", description: "Install completion to shell config" }
+        ]
+      },
+      {
+        name: "python -m devos setup-completion",
+        description: "Setup shell completion interactively",
+        usage: [
+          "python -m devos setup-completion"
+        ]
+      },
+      {
+        name: "python -m devos shells",
+        description: "List available shells for completion",
+        usage: [
+          "python -m devos shells"
+        ]
+      }
+    ]
+  },
+  {
+    id: "utility-commands",
+    title: "Utility Commands",
+    icon: <Activity className="h-5 w-5" />,
+    description: "Additional utility and helper commands",
+    commands: [
+      {
+        name: "python -m devos recent",
+        description: "Show recent activity or run recent command",
+        usage: [
+          "python -m devos recent",
+          "python -m devos recent --run",
+          "python -m devos recent --limit 5"
+        ],
+        options: [
+          { flag: "--run", description: "Run the most recent command" },
+          { flag: "--limit", description: "Number of recent items to show" }
+        ]
+      },
+      {
+        name: "python -m devos r",
+        description: "Show recent activity (alias for recent)",
+        usage: [
+          "python -m devos r",
+          "python -m devos r --run"
+        ]
+      },
+      {
+        name: "python -m devos report",
+        description: "Generate reports and analytics",
+        usage: [
+          "python -m devos report",
+          "python -m devos report --export-md report.md",
+          "python -m devos report --period weekly"
+        ],
+        options: [
+          { flag: "--export-md", description: "Export report to Markdown" },
+          { flag: "--period", description: "Report period: daily, weekly, monthly" }
+        ]
+      },
+      {
+        name: "python -m devos stats",
+        description: "Show statistics and analytics",
+        usage: [
+          "python -m devos stats",
+          "python -m devos stats --project my-project"
+        ],
+        options: [
+          { flag: "--project", description: "Show stats for specific project" }
+        ]
+      },
+      {
+        name: "python -m devos time",
+        description: "Time tracking and reporting",
+        usage: [
+          "python -m devos time",
+          "python -m devos time --today",
+          "python -m devos time --export"
+        ],
+        options: [
+          { flag: "--today", description: "Show today's time" },
+          { flag: "--export", description: "Export time data" }
+        ]
+      },
+      {
+        name: "python -m devos test",
+        description: "Run tests and test-related commands",
+        usage: [
+          "python -m devos test",
+          "python -m devos test --coverage",
+          "python -m devos test --watch"
+        ],
+        options: [
+          { flag: "--coverage", description: "Run with coverage" },
+          { flag: "--watch", description: "Watch mode for tests" }
+        ]
+      },
+      {
+        name: "python -m devos t",
+        description: "Run tests (alias for test)",
+        usage: [
+          "python -m devos t",
+          "python -m devos t --coverage"
+        ]
+      },
+      {
+        name: "python -m devos c",
+        description: "Configuration commands (alias for config)",
+        usage: [
+          "python -m devos c show",
+          "python -m devos c set key value"
+        ]
+      },
+      {
+        name: "python -m devos e",
+        description: "Environment commands (alias for env)",
+        usage: [
+          "python -m devos e list",
+          "python -m devos e set KEY value"
+        ]
+      },
+      {
+        name: "python -m devos pm",
+        description: "Project management (alias for project)",
+        usage: [
+          "python -m devos pm list",
+          "python -m devos pm add my-project"
+        ]
+      },
+      {
+        name: "python -m devos proj",
+        description: "Project management (alias for project)",
+        usage: [
+          "python -m devos proj list",
+          "python -m devos proj add my-project"
+        ]
+      }
+    ]
+  }
+];
 
   return (
     <div className="min-h-screen bg-gray-100">
